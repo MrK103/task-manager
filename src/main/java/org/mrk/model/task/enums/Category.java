@@ -1,4 +1,4 @@
-package org.mrk.model.enums;
+package org.mrk.model.task.enums;
 
 public enum Category {
     REPEATS("Повторяющаяся задача"),

@@ -1,35 +1,37 @@
 package org.mrk.app;
 
-import org.mrk.interfaces.Task;
-import org.mrk.model.AbstractTask;
-import org.mrk.util.CreateTask;
-
-import java.util.ArrayList;
+import org.mrk.builder.user.UserBuilder;
+import org.mrk.interfaces.User;
+import org.mrk.util.AbstractUtil;
 
 
-public class App{
+public class App extends AbstractUtil {
 
     public static void main(String[] args) {
-        ArrayList<AbstractTask> tasks;
-        new CreateTask(tasks = new ArrayList<>());
 
-        for (Task task : tasks){
-            System.out.println(task.toString());
-        }
+        // Создать 2 реализации, параметризованные разными типами (String и Integer).
+        User<String> personString = new UserBuilder<String>()
+                .setFirstName("Mark")
+                .setLastName("Sholomitskiy")
+                .setId("PRIORITY_ID")
+                .build();
 
-       /* while (!tasks.isEmpty()){
-            Date currentTime = new Date();
-            Date realizationTime =  tasks.get(0).getDate();
-            System.out.println("Задача " + tasks.get(0).getName() + " выполнится через " +
-                    ((realizationTime.getTime() - currentTime.getTime()) / 1000) + " секунд;");
+        User<Integer> personInt = new UserBuilder<Integer>()
+                 .setFirstName("Mark")
+                 .setLastName("Sholomitskiy")
+                 .setId(2)
+                 .build();
 
-            while ((realizationTime.getTime() - currentTime.getTime()) >= 0 ){
-                currentTime = new Date();
-            }
+        System.out.println(personString.toString() + " (id - String)\n"
+                + personInt.toString() + " (id - Integer)\n");
 
-            tasks.get(0).realization();
-            tasks.remove(0);
-        }*/
+
+        //create users vs task
+
+        UserInterface ui = new UserInterface();
+        ui.initUsers();
+        ui.menu();
+
 
     }
 }
