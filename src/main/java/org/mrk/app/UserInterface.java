@@ -17,6 +17,7 @@ public class UserInterface extends AbstractUtil {
     public UserInterface(){
     }
 
+    @SuppressWarnings("unused")
     public UserInterface(User<Integer> user){
         this.user = user;
     }
@@ -55,7 +56,7 @@ public class UserInterface extends AbstractUtil {
         switch (answer){
             case "1" -> {
                 System.out.println("|----------------------------------|");
-                user.getTasks().forEach(task -> System.out.println(task.getName()));
+                user.getTasks().forEach(task -> System.out.println(task.getIdTask() + ") " + task.getName()));
                 System.out.println("|----------------------------------|");
                 menu();
             }
@@ -75,7 +76,7 @@ public class UserInterface extends AbstractUtil {
             default -> System.out.println("Программа завершена");
         }
     }
-
+    @SuppressWarnings("deprecation")
     public void sortMenu(){
         String answer;
         answer = input("""
@@ -88,13 +89,16 @@ public class UserInterface extends AbstractUtil {
                 """);
         switch (answer){
             case "1" -> {
-                user.getTasks().forEach(System.out::println);
+                user.getTasks().stream()
+                        .sorted(Comparator.comparing(Task::getDate))
+                        .forEach(task -> System.out.println("| " + task.getName() + " - "
+                                + task.getDate().toLocaleString()));
                 sortMenu();}
             case "2" -> {
                 user.getTasks()
                         .stream()
                         .sorted(Comparator.comparing(Task::getName))
-                        .forEach(System.out::println);
+                        .forEach(task -> System.out.println(task.getName()));
                 sortMenu();
             }
             case "3" -> {
@@ -147,6 +151,7 @@ public class UserInterface extends AbstractUtil {
             default -> filterMenu();
         }
     }
+
     void priorityMenu(){
         switch (input("""
                 |----------------------------------|

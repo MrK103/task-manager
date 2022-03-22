@@ -5,7 +5,7 @@ import org.mrk.model.task.enums.Priority;
 
 import java.util.Date;
 
-public class RepeatingTask extends AbstractTask {
+public final class RepeatingTask extends AbstractTask {
     private final int repeatsTime;
     private final int repeatsAfter;
 

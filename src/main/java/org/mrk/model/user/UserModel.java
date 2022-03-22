@@ -8,7 +8,7 @@ import org.mrk.interfaces.Task;
 import java.util.TreeSet;
 
 //@Getter
-public class UserModel<T> implements org.mrk.interfaces.User<T> {
+public final class UserModel<T> implements org.mrk.interfaces.User<T> {
 
     private final T id;
     private final String lastName;

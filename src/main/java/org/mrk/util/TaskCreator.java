@@ -26,10 +26,10 @@ public class TaskCreator extends AbstractUtil {
         do {
             Task task = createTask();
             if (!checkRepeats(task) || !tasks.add(task)) {
-                System.out.println("Упс, задача с таким именем или датой уже найдена, попробуйте еще раз");
+                System.out.println("Упс, задача " + task.getName() + " уже существует, попробуйте еще раз");
             }
         }
-        while (checkAnswer(input("Добавить еще одну задачу?")));
+        while (checkAnswer(input("Добавить еще одну задачу? (1/2), (Y/N)")));
         return tasks;
     }
 

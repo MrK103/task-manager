@@ -5,7 +5,7 @@ import org.mrk.model.task.enums.Priority;
 
 import java.util.Date;
 
-public class OneTimeTask extends AbstractTask {
+public final class OneTimeTask extends AbstractTask {
 
     public OneTimeTask(String name, Category category, Priority priority, Date date) {
         super(name,category,priority, date);
