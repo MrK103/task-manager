@@ -2,12 +2,11 @@ package org.mrk.app;
 
 import org.mrk.builder.user.UserBuilder;
 import org.mrk.interfaces.User;
-import org.mrk.util.AbstractUtil;
 
 import java.util.TreeSet;
 
 
-public class App extends AbstractUtil {
+public class App {
 
     public static void main(String[] args) {
 
@@ -23,17 +22,22 @@ public class App extends AbstractUtil {
                  .setFirstName("Mark")
                  .setLastName("Sholomitskiy")
                  .setId(2)
-                 .setTasks(new TreeSet<>())
+                 //.setTasks(new TreeSet<>())
                  .build();
 
         System.out.println(personString.toString() + " (id - String)\n"
                 + personInt.toString() + " (id - Integer)\n");
 
-
         //create users vs task
-
         UserInterface ui = new UserInterface();
-        //ui = new UserInterface(personInt);
+
+        /*
+          homework 8
+          В personInt не проиницилизирована коллекция задач, выбросит ошибку NullTasKExeption,
+          Try/catch применены в AbstractUtil
+         */
+
+        ui = new UserInterface(personInt);
         ui.initUsers();
     }
 }

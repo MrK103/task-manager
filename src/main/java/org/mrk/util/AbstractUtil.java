@@ -10,6 +10,7 @@ public abstract class AbstractUtil{
          return scanner.nextLine();
      }
 
+     @SuppressWarnings("unused")
     public double validDouble(String d) {
         try {
             return Double.parseDouble(d);

@@ -1,6 +1,7 @@
 package org.mrk.app;
 
 import org.mrk.interfaces.User;
+import org.mrk.exception.NullTaskException;
 import org.mrk.util.TaskCreator;
 import org.mrk.builder.user.UserBuilder;
 import org.mrk.interfaces.Task;
@@ -17,18 +18,20 @@ public class UserInterface extends AbstractUtil {
     public UserInterface(){
     }
 
+//    @SuppressWarnings("unused")
+//    public UserInterface(User<Integer> user){
+//        this.user = user;
+//    }
     @SuppressWarnings("unused")
     public UserInterface(User<Integer> user){
         this.user = user;
     }
-
     public void initUsers(){
         System.out.println("User initialization...");
         if (user != null){
             System.out.println("Welcome, " + user.getFirstName() + "!");
             if (user.getTasks()==null) {
-                System.out.println("Error, tasks not found");
-                return;
+                throw new NullTaskException("ERROR, User task is null", user);
             }
             menu();
         } else {

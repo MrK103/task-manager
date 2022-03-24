@@ -15,5 +15,4 @@ public class OnceTaskBuilder extends AbstractTaskBuilder {
                 ,setPriority()
                 ,setDate());
     }
-
 }
