@@ -1,7 +1,7 @@
 package org.mrk.util;
 
-import org.mrk.builder.task.OneTimeTaskBuilder;
-import org.mrk.builder.task.RepeatingTaskBuilder;
+import org.mrk.builder.task.OnceTaskBuilder;
+import org.mrk.builder.task.RepeatTaskBuilder;
 import org.mrk.interfaces.Task;
 
 import java.util.TreeSet;
@@ -26,21 +26,21 @@ public class TaskCreator extends AbstractUtil {
         do {
             Task task = createTask();
             if (!checkRepeats(task) || !tasks.add(task)) {
-                System.out.println("Упс, задача " + task.getName() + " уже существует, попробуйте еще раз");
+                System.out.println("Oops, the task " + task.getName() + " already exists, please try again");
             }
         }
-        while (checkAnswer(input("Добавить еще одну задачу? (1/2), (Y/N)")));
+        while (checkAnswer(input("Add one more task? (1/2), (Y/N)")));
         return tasks;
     }
 
     public Task createTask(){
         if (checkAnswer(input("""
-                Выберите категорию задачи? (1/2), (Y/N)
-                 1) Одноразовая
-                 2) Повторяющаяся
+                Select a task category? (1/2), (Y/N)
+                 1) One time task
+                 2) Repeatable task
                  """))) {
-            return new OneTimeTaskBuilder().builder();
-        } else return new RepeatingTaskBuilder().builder();
+            return new OnceTaskBuilder().builder();
+        } else return new RepeatTaskBuilder().builder();
     }
 
     public boolean checkRepeats(Task task){

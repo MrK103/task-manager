@@ -8,21 +8,15 @@ import org.mrk.interfaces.Task;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * 2. Минимальные характеристики задачи: название,
- * категория, приоритет, дата выполнения (строки).
- */
-
-
 @Getter
 public abstract class AbstractTask implements Task{
 
     private final String name;
-    protected Category category;
     private final Priority priority;
     private final Date date;
-    private static int id = 0;
     private final int idTask;
+    private static int id = 0;
+    protected Category category;
 
     public AbstractTask(String name, Category category, Priority priority, Date date) {
         this.name = name;
@@ -34,7 +28,7 @@ public abstract class AbstractTask implements Task{
 
     @Override
     public void realization() {
-        System.out.println("Задача " + name + " выполнена успешно!");
+        System.out.println("Task " + name + " completed successfully!");
     }
 
     @Override

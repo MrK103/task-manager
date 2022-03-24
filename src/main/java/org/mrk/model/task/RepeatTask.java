@@ -5,12 +5,12 @@ import org.mrk.model.task.enums.Priority;
 
 import java.util.Date;
 
-public final class RepeatingTask extends AbstractTask {
+public final class RepeatTask extends AbstractTask {
     private final int repeatsTime;
     private final int repeatsAfter;
 
 
-    public RepeatingTask(String name, Category category, Priority priority
+    public RepeatTask(String name, Category category, Priority priority
             , Date date, int repeatsTime, int repeatsAfter ) {
         super(name,category,priority, date);
         this.repeatsAfter = repeatsAfter;

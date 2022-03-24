@@ -23,33 +23,39 @@ public class UserInterface extends AbstractUtil {
     }
 
     public void initUsers(){
-        System.out.println("Загрузка пользователя...");
+        System.out.println("User initialization...");
         if (user != null){
-            System.out.println("Пользователь найден");
+            System.out.println("Welcome, " + user.getFirstName() + "!");
+            if (user.getTasks()==null) {
+                System.out.println("Error, tasks not found");
+                return;
+            }
             menu();
         } else {
-            System.out.println("Пользователь не найден, создание новго пользователя");
+            System.out.println("User not found, creating a new user");
             user = new UserBuilder<Integer>()
-                    .setFirstName(input("Введите ваше имя"))
-                    .setLastName(input("Введите фамилию"))
+                    .setFirstName(input("Enter your name"))
+                    .setLastName(input("Enter last name"))
                     .setId(1)
                     .setTasks(new TaskCreator().addTasks())
                     .build();
+            menu();
         }
     }
 
     public void menu(){
-        String answer = input("\n| " + user.toString()
+        String answer = input("\n| "
+                + user.toString()
                 + """
-                
+
                 |----------------------------------|
-                | 1.Показать задачи                |
-                | 2.Показать задачи полностью      |
-                | 3.Добавление новых задач         |
-                | 4.Удаление задач                 |
-                | 5.Отсортировать задачи           |
-                | 6.Отфильтровать задачи           |
-                | 7.Выйти (Любую цифру)            |
+                | 1.Show tasks                     |
+                | 2.Show tasks in full             |
+                | 3.Add new tasks                  |
+                | 4.Delete tasks                   |
+                | 5.Sort tasks                     |
+                | 6.Filter tasks                   |
+                | 7.Exit (Any number)              |
                 |----------------------------------|
                 """);
 
@@ -57,13 +63,13 @@ public class UserInterface extends AbstractUtil {
             case "1" -> {
                 System.out.println("|----------------------------------|");
                 user.getTasks().forEach(task -> System.out.println(task.getIdTask() + ") " + task.getName()));
-                System.out.println("|----------------------------------|");
+                System.out.print("|----------------------------------|");
                 menu();
             }
             case "2" -> {
                 System.out.println("|----------------------------------|");
                 user.getTasks().forEach(System.out::println);
-                System.out.println("|----------------------------------|");
+                System.out.print("|----------------------------------|");
                 menu();
             }
             case "3" -> {
@@ -73,7 +79,7 @@ public class UserInterface extends AbstractUtil {
             case "4" -> deleteMenu();
             case "5" -> sortMenu();
             case "6" -> filterMenu();
-            default -> System.out.println("Программа завершена");
+            default -> System.out.println("Program completed");
         }
     }
     @SuppressWarnings("deprecation")
@@ -81,10 +87,10 @@ public class UserInterface extends AbstractUtil {
         String answer;
         answer = input("""
                 |----------------------------------|
-                | 1. Сортировка по дате            |
-                | 2. Сортировка по названию        |
-                | 3. Сортировка по приоритетам     |
-                | 4. Любую цифру для возврата      |
+                | 1. Sort by date                  |
+                | 2. Sort by name                  |
+                | 3. Sort by priority              |
+                | 4. Any number to return          |
                 |----------------------------------|
                 """);
         switch (answer){
@@ -98,14 +104,15 @@ public class UserInterface extends AbstractUtil {
                 user.getTasks()
                         .stream()
                         .sorted(Comparator.comparing(Task::getName))
-                        .forEach(task -> System.out.println(task.getName()));
+                        .forEach(task -> System.out.println("| " + task.getName()));
                 sortMenu();
             }
             case "3" -> {
                 user.getTasks()
                         .stream()
                         .sorted(Comparator.comparing(Task::getPriority))
-                        .forEach(task -> System.out.println(task.getName() + " - " + task.getPriority() + " priority"));
+                        .forEach(task -> System.out.printf("| %s - %s priority\n", task.getName(), task.getPriority()));
+
                 sortMenu();
             }
             default -> menu();
@@ -116,9 +123,9 @@ public class UserInterface extends AbstractUtil {
         System.out.println();
         switch (input("""
                 |----------------------------------|
-                | 1. Отфильтровать по категория    |
-                | 2. Отфильтровать по приоритетам  |
-                | 3. Вернуться назад               |
+                | 1. Filter by category            |
+                | 2. Filter by priority            |
+                | 3. Any number to return          |
                 |----------------------------------|
                 """)) {
             case "1" -> categoryMenu();
@@ -129,9 +136,9 @@ public class UserInterface extends AbstractUtil {
     void categoryMenu(){
         switch (input("""
                 |----------------------------------|
-                | 1. Показать одноразовые задачи   |
-                | 2. Показать многоразовые задачи  |
-                | 3. Вернуться назад               |
+                | 1. Show one-time tasks           |
+                | 2. Show repeatable tasks         |
+                | 3. Any number to return          |
                 |----------------------------------|
                 """)){
             case "1" -> {
@@ -155,10 +162,10 @@ public class UserInterface extends AbstractUtil {
     void priorityMenu(){
         switch (input("""
                 |----------------------------------|
-                | 1. Задачи с высоким приоритетом  |
-                | 2. Ззадачи с низким приоритетом  |
-                | 3. Задачи с обычым приоритетом   |
-                | 4. Вернуться                     |
+                | 1. High priority tasks           |
+                | 2. Low priority tasks            |
+                | 3. Default priority tasks        |
+                | 4. Any number to return          |
                 |----------------------------------|
                 """)){
             case "1" -> {
@@ -189,7 +196,7 @@ public class UserInterface extends AbstractUtil {
     void deleteMenu(){
         List<Task> tasks = user.getTasks().stream().toList();
         tasks.forEach(name -> System.out.println((tasks.indexOf(name) + 1) + ") " + name.getName()));
-        int answer = validInt(input("Введите номер задачи, которую хотите удалить, (любую другую для выхода)"));
+        int answer = validInt(input("Enter the number of the task you want to delete (any other to exit)"));
         if (answer < 1 || answer > tasks.size()) {
             menu();
         } else {

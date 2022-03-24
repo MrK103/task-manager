@@ -14,7 +14,7 @@ public abstract class AbstractUtil{
         try {
             return Double.parseDouble(d);
         } catch (NumberFormatException ex) {
-            return validDouble(input("Вводите только числа"));
+            return validDouble(input("Enter only numbers"));
         }
     }
 
@@ -22,7 +22,7 @@ public abstract class AbstractUtil{
         try {
             return Integer.parseInt(d);
         } catch (NumberFormatException ex) {
-            return validInt(input("Вводите только целые числа"));
+            return validInt(input("Enter only whole numbers"));
         }
     }
 
@@ -31,6 +31,6 @@ public abstract class AbstractUtil{
              return true;
          } else if (s.equalsIgnoreCase("n") || s.equalsIgnoreCase("2")) {
              return false;
-         } else return checkAnswer(input("Вы ввели некорректный ответ, отвечайте Y/N (1/2)"));
+         } else return checkAnswer(input("You entered an incorrect answer, please answer Y/N (1/2)"));
      }
 }
