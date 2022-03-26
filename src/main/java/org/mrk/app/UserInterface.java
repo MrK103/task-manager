@@ -18,10 +18,6 @@ public class UserInterface extends AbstractUtil {
     public UserInterface(){
     }
 
-//    @SuppressWarnings("unused")
-//    public UserInterface(User<Integer> user){
-//        this.user = user;
-//    }
     @SuppressWarnings("unused")
     public UserInterface(User<Integer> user){
         this.user = user;
@@ -30,18 +26,17 @@ public class UserInterface extends AbstractUtil {
         System.out.println("User initialization...");
         if (user != null){
             System.out.println("Welcome, " + user.getFirstName() + "!");
-            if (user.getTasks()==null) {
-                throw new NullTaskException("ERROR, User task is null", user);
+            try {
+                if (user.getTasks() == null) {
+                    throw new NullTaskException("ERROR, User task is null", user);
+                }
+            }catch (NullTaskException e) {
+                user = AbstractUtil.refactorUser(user);
             }
             menu();
         } else {
             System.out.println("User not found, creating a new user");
-            user = new UserBuilder<Integer>()
-                    .setFirstName(input("Enter your name"))
-                    .setLastName(input("Enter last name"))
-                    .setId(1)
-                    .setTasks(new TaskCreator().addTasks())
-                    .build();
+            user = AbstractUtil.createUser();
             menu();
         }
     }

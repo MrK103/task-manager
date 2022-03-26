@@ -10,14 +10,6 @@ public class App {
 
     public static void main(String[] args) {
 
-        // Создать 2 реализации, параметризованные разными типами (String и Integer). (homework5)
-        User<String> personString = new UserBuilder<String>()
-                .setFirstName("Mark")
-                .setLastName("Sholomitskiy")
-                .setId("PRIORITY_ID")
-                .setTasks(new TreeSet<>())
-                .build();
-
         User<Integer> personInt = new UserBuilder<Integer>()
                  .setFirstName("Mark")
                  .setLastName("Sholomitskiy")
@@ -25,15 +17,12 @@ public class App {
                  //.setTasks(new TreeSet<>())
                  .build();
 
-        System.out.println(personString.toString() + " (id - String)\n"
-                + personInt.toString() + " (id - Integer)\n");
-
         //create users vs task
         UserInterface ui = new UserInterface();
 
         /*
           homework 8
-          В personInt не проиницилизирована коллекция задач, выбросит ошибку NullTasKExeption,
+          В personInt не проиницилизирована коллекция задач, выбросит ошибку NullTasKException,
           Try/catch применены в AbstractUtil
          */
 
