@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.mrk.model.task.enums.Category;
 import org.mrk.model.task.enums.Priority;
 import org.mrk.interfaces.Task;
+import org.mrk.util.AbstractUtil;
 
 import java.util.Date;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public abstract class AbstractTask implements Task{
     public String toString(){
         return "\nTask name: " + name +
                 "\nID - " + idTask +
-                "\nDate: " + date +
+                "\n" + AbstractUtil.deadLineTime(date) +
                 "\nCategory: " + category.toString() +
                 "\nPriority: " + priority;
     }

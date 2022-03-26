@@ -8,36 +8,29 @@ import java.util.TreeSet;
 
 public class App {
 
+    /**
+     * Добавлены методы deadLineTime (высчитывает время до выполнения задачи в человеческом виде и
+     * метод deadLineMs (время до выполнения в мс) в классе AbstractUtil
+     *
+     */
+
     public static void main(String[] args) {
 
-        // Создать 2 реализации, параметризованные разными типами (String и Integer). (homework5)
-        User<String> personString = new UserBuilder<String>()
-                .setFirstName("Mark")
-                .setLastName("Sholomitskiy")
-                .setId("PRIORITY_ID")
-                .setTasks(new TreeSet<>())
-                .build();
+// чтобы не создавать каждый раз нового пользователя
 
-        User<Integer> personInt = new UserBuilder<Integer>()
-                 .setFirstName("Mark")
-                 .setLastName("Sholomitskiy")
-                 .setId(2)
-                 //.setTasks(new TreeSet<>())
-                 .build();
+//        User<Integer> personInt = new UserBuilder<Integer>()
+//                .setFirstName("Mark")
+//                .setLastName("Sholomitskiy")
+//                .setId(2)
+//                //.setTasks(new TreeSet<>())
+//                .build();
+//        UserInterface ui = new UserInterface(personInt);
+//        ui.initUsers();
 
-        System.out.println(personString.toString() + " (id - String)\n"
-                + personInt.toString() + " (id - Integer)\n");
 
         //create users vs task
         UserInterface ui = new UserInterface();
-
-        /*
-          homework 8
-          В personInt не проиницилизирована коллекция задач, выбросит ошибку NullTasKExeption,
-          Try/catch применены в AbstractUtil
-         */
-
-        ui = new UserInterface(personInt);
+        ui = new UserInterface();
         ui.initUsers();
     }
 }

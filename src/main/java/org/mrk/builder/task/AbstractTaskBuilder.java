@@ -10,7 +10,7 @@ import java.util.Date;
 public abstract class AbstractTaskBuilder extends AbstractUtil {
 
     public String setName() {
-        return input("Input a task name (No spaces)");
+        return input("Input a task name");
     }
 
     public Priority setPriority() {

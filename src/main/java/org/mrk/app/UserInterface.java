@@ -3,7 +3,6 @@ package org.mrk.app;
 import org.mrk.interfaces.User;
 import org.mrk.exception.NullTaskException;
 import org.mrk.util.TaskCreator;
-import org.mrk.builder.user.UserBuilder;
 import org.mrk.interfaces.Task;
 import org.mrk.model.task.enums.Category;
 import org.mrk.model.task.enums.Priority;
@@ -18,10 +17,6 @@ public class UserInterface extends AbstractUtil {
     public UserInterface(){
     }
 
-//    @SuppressWarnings("unused")
-//    public UserInterface(User<Integer> user){
-//        this.user = user;
-//    }
     @SuppressWarnings("unused")
     public UserInterface(User<Integer> user){
         this.user = user;
@@ -30,18 +25,17 @@ public class UserInterface extends AbstractUtil {
         System.out.println("User initialization...");
         if (user != null){
             System.out.println("Welcome, " + user.getFirstName() + "!");
-            if (user.getTasks()==null) {
-                throw new NullTaskException("ERROR, User task is null", user);
+            try {
+                if (user.getTasks() == null) {
+                    throw new NullTaskException("ERROR, User task is null", user);
+                }
+            }catch (NullTaskException e) {
+                user = AbstractUtil.refactorUser(user);
             }
             menu();
         } else {
             System.out.println("User not found, creating a new user");
-            user = new UserBuilder<Integer>()
-                    .setFirstName(input("Enter your name"))
-                    .setLastName(input("Enter last name"))
-                    .setId(1)
-                    .setTasks(new TaskCreator().addTasks())
-                    .build();
+            user = AbstractUtil.createUser();
             menu();
         }
     }
@@ -65,7 +59,9 @@ public class UserInterface extends AbstractUtil {
         switch (answer){
             case "1" -> {
                 System.out.println("|----------------------------------|");
-                user.getTasks().forEach(task -> System.out.println(task.getIdTask() + ") " + task.getName()));
+                user.getTasks().forEach(task -> System.out.println(task.getIdTask() + ") "
+                        + task.getName() + ". "
+                        + AbstractUtil.deadLineTime(task.getDate())));
                 System.out.print("|----------------------------------|");
                 menu();
             }
