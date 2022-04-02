@@ -6,34 +6,34 @@ import org.mrk.model.user.UserModel;
 
 import java.util.TreeSet;
 
-public class UserBuilder<T> {
-        private T id;
+public class UserBuilder {
+        private int id;
         private String lastName;
         private String firstName;
         private TreeSet<Task> tasks;
 
-        public UserBuilder<T> setTasks (TreeSet<Task> tasks){
+        public UserBuilder setTasks (TreeSet<Task> tasks){
             this.tasks = tasks;
             return this;
         }
 
-        public UserBuilder<T> setId(T id) {
+        public UserBuilder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public UserBuilder<T> setLastName(String lastName) {
+        public UserBuilder setLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public UserBuilder<T> setFirstName(String firstName) {
+        public UserBuilder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public User<T> build() {
-            return new UserModel<>(id, lastName, firstName, tasks);
+        public User build() {
+            return new UserModel(id, lastName, firstName, tasks);
         }
     }
 

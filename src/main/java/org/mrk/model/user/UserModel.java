@@ -1,22 +1,20 @@
 package org.mrk.model.user;
 
 //import lombok.Builder;
-//import lombok.Getter;
-
+import lombok.Getter;
 import org.mrk.interfaces.Task;
-
 import java.util.TreeSet;
 
-//@Getter
-public final class UserModel<T> implements org.mrk.interfaces.User<T> {
+@Getter
+public final class UserModel implements org.mrk.interfaces.User{
 
-    private final T id;
+    private final int id;
     private final String lastName;
     private final String firstName;
     private final TreeSet<Task> tasks;
 
 //@Builder
-    public UserModel(T id, final String newLastName, final String newFirstName, TreeSet<Task> tasks) {
+    public UserModel(int id, final String newLastName, final String newFirstName, TreeSet<Task> tasks) {
         this.id = id;
         this.lastName = newLastName;
         this.firstName = newFirstName;
@@ -24,27 +22,7 @@ public final class UserModel<T> implements org.mrk.interfaces.User<T> {
     }
 
     @Override
-    public String getLastName() {
-        return lastName;
-    }
-
-    @Override
-    public String getFirstName() {
-        return firstName;
-    }
-    
-    @Override
-    public T getId(){
-        return id;
-    }
-
-    @Override
     public String toString(){
         return firstName + " " + lastName + " " + id;
-    }
-
-    @Override
-    public TreeSet<Task> getTasks() {
-        return tasks;
     }
 }

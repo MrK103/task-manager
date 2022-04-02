@@ -1,13 +1,15 @@
 package org.mrk.builder.task;
 
 import org.mrk.model.task.enums.Priority;
-import org.mrk.util.AbstractUtil;
+import org.mrk.util.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class AbstractTaskBuilder extends AbstractUtil {
+import static org.mrk.util.Util.input;
+
+public abstract class AbstractTaskBuilder{
 
     public String setName() {
         return input("Input a task name");

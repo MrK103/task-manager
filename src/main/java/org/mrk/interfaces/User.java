@@ -1,13 +1,14 @@
 package org.mrk.interfaces;
 
+import java.io.Serializable;
 import java.util.TreeSet;
 
-public interface User<T> {
+public interface User extends Serializable {
     String getLastName();
 
     String getFirstName();
 
-    T getId();
+    int getId();
 
     String toString();
 

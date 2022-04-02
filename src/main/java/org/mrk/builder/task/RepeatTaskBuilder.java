@@ -3,6 +3,9 @@ package org.mrk.builder.task;
 import org.mrk.model.task.RepeatTask;
 import org.mrk.model.task.enums.Category;
 
+import static org.mrk.util.Util.input;
+import static org.mrk.util.Util.validInt;
+
 public class RepeatTaskBuilder extends AbstractTaskBuilder {
 
     public int setRepeatsTime(){

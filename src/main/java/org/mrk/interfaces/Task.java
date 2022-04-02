@@ -1,8 +1,8 @@
 package org.mrk.interfaces;
 
-import org.mrk.model.task.AbstractTask;
+import java.io.Serializable;
 
-public interface Task extends Comparable<Task> {
+public interface Task extends Comparable<Task>, Serializable {
 
     void realization();
 

@@ -1,4 +1,4 @@
-package org.mrk.util;
+package org.mrk.builder.task;
 
 import org.mrk.builder.task.OnceTaskBuilder;
 import org.mrk.builder.task.RepeatTaskBuilder;
@@ -6,9 +6,11 @@ import org.mrk.interfaces.Task;
 
 import java.util.TreeSet;
 
+import static org.mrk.util.Util.checkAnswer;
+import static org.mrk.util.Util.input;
 
 
-public class TaskCreator extends AbstractUtil {
+public class TaskCreator{
     private TreeSet<Task> tasks;
 
     public TaskCreator(){
