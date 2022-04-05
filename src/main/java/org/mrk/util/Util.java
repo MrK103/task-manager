@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @UtilityClass
@@ -33,16 +34,13 @@ public class Util {
         }
     }
 
-    public Date setDate(String textFromField) {
+    public Date setDate(LocalDate data, String time) {
         Date date;
-        String[] arrayDate;
-        if ((arrayDate = textFromField.split(" ")).length!=2){
-            return null;
-        }
-
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        if (data == null) return null;
+        if (time.isEmpty()) time = "00:00";
         try {
-            date = format.parse(arrayDate[0] + " " + arrayDate[1]);
+            date = format.parse(data + " " + time);
         } catch (ParseException e) {
             return null;
         }

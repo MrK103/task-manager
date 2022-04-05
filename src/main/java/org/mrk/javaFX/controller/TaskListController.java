@@ -78,8 +78,11 @@ public class TaskListController implements Controller {
         btnDel.setOnMouseClicked(event -> {
             if (listSelections.getSelectedItem() != null) {
                 UserUtil.getUser().getTasks().remove(listSelections.getSelectedItem());
+                int id = listSelections.getSelectedIndex();
+                if (id != 0) --id;
                 FileUtil.saveUserObj(UserUtil.getUser());
                 setFilter(filterMenu.getValue());
+                listSelections.select(id);
             }
             }
 

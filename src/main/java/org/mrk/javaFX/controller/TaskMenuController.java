@@ -18,6 +18,8 @@ import java.util.Arrays;
 
 public class TaskMenuController implements Controller {
     @FXML
+    public DatePicker datePicker;
+    @FXML
     private Pane titlePane, btnOK;
     @FXML
     private ImageView btnMinimize, btnClose;
@@ -40,6 +42,9 @@ public class TaskMenuController implements Controller {
     }
 
     public void init(Stage stage) {
+
+
+
         boxPriority.setItems(listPriority);
         boxPriority.setValue(listPriority.get(0));
 
@@ -78,7 +83,7 @@ public class TaskMenuController implements Controller {
             } else labelTaskName.setTextFill(Color.web("#000000"));
 
             //проверка поля дата
-            if(Util.setDate(dateField.getText())==null) { //неправильная дата
+            if(Util.setDate(datePicker.getValue(), dateField.getText())==null) { //неправильная дата
                 labelDate.setTextFill(Color.web("#FF0000"));
                 return;
             } else labelDate.setTextFill(Color.web("#000000"));
@@ -95,7 +100,7 @@ public class TaskMenuController implements Controller {
                                 nameField.getText()
                                 , Category.REPEATS
                                 , boxPriority.getValue()
-                                , Util.setDate(dateField.getText())
+                                , Util.setDate(datePicker.getValue(), dateField.getText())
                                 ,Integer.parseInt(repeatsField.getText())
                                 ,Integer.parseInt(timesRepField.getText())
                         ));
@@ -105,7 +110,7 @@ public class TaskMenuController implements Controller {
                                 nameField.getText()
                                 , Category.ONCE
                                 , boxPriority.getValue()
-                                , Util.setDate(dateField.getText())));
+                                , Util.setDate(datePicker.getValue(), dateField.getText())));
             }
             FileUtil.saveUserObj(UserUtil.getUser());
             Link.currentLink = Link.TaskList;

@@ -75,7 +75,10 @@ public class MainWindowController implements Controller {
         btnDel.setOnMouseClicked(event -> {
             if (listSelections.selectedItemProperty().get() != null) {
              FileUtil.deleteUser(listSelections.selectedItemProperty().get());
+             int id = listSelections.getSelectedIndex();
+             if (id != 0) --id;
              loadUsersList();
+             listSelections.select(id);
             }
         });
     }
