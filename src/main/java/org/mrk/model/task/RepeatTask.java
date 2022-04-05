@@ -1,14 +1,13 @@
 package org.mrk.model.task;
 
-import org.mrk.model.task.enums.Category;
-import org.mrk.model.task.enums.Priority;
+import org.mrk.enums.Category;
+import org.mrk.enums.Priority;
 
 import java.util.Date;
 
 public final class RepeatTask extends AbstractTask {
     private final int repeatsTime;
     private final int repeatsAfter;
-
 
     public RepeatTask(String name, Category category, Priority priority
             , Date date, int repeatsTime, int repeatsAfter ) {
@@ -20,7 +19,7 @@ public final class RepeatTask extends AbstractTask {
     public String toString(){
         return super.toString() +
                 "\nRepeats time: " + repeatsTime +
-                "\nRepeats after: " + repeatsAfter + " seconds\n";
+                " Repeats after: " + repeatsAfter + " seconds\n";
     }
 
 }

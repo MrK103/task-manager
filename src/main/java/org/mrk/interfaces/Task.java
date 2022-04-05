@@ -22,9 +22,9 @@ public interface Task extends Comparable<Task>, Serializable {
 
     int getIdTask();
 
-    org.mrk.model.task.enums.Category getCategory();
+    org.mrk.enums.Category getCategory();
 
-    org.mrk.model.task.enums.Priority getPriority();
+    org.mrk.enums.Priority getPriority();
 
     java.util.Date getDate();
 

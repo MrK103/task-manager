@@ -1,8 +1,11 @@
 package org.mrk.util;
 
 import lombok.experimental.UtilityClass;
-import org.mrk.builder.user.UserBuilder;
-import org.mrk.interfaces.User;
+import org.mrk.builder.task.OnceTaskBuilder;
+import org.mrk.builder.task.RepeatTaskBuilder;
+import org.mrk.interfaces.Task;
+import org.mrk.enums.Category;
+import org.mrk.enums.Priority;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,13 +39,31 @@ public class TaskUtil {
     }
 
 
+    public static boolean checkRepeats(Task task, TreeSet<Task> tasks){
+        if (tasks.isEmpty()) {
+            return true;
+        }
+        else return tasks
+                .stream()
+                .noneMatch(AbstractTask -> AbstractTask.getName().equals(task.getName()));
+    }
 
-    public static User addUserTask(User user){
-        return new UserBuilder()
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setId(user.getId())
-                .setTasks(new TreeSet<>())
-                .build();
+    public static Task addTaskOnce(String name, Category category, Priority priority, Date date){
+        return new OnceTaskBuilder()
+                .setName(name)
+                .setCategory(category)
+                .setPriority(priority)
+                .setDate(date).
+                builder();
+    }
+    public static Task addTaskRepeats(String name, Category category, Priority priority, Date date, int reps, int repsAfter){
+        return new RepeatTaskBuilder()
+                .setName(name)
+                .setCategory(category)
+                .setPriority(priority)
+                .setDate(date)
+                .setRepeatsTime(reps)
+                .setRepeatsAfter(repsAfter)
+                .builder();
     }
 }

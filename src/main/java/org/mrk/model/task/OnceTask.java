@@ -1,7 +1,7 @@
 package org.mrk.model.task;
 
-import org.mrk.model.task.enums.Category;
-import org.mrk.model.task.enums.Priority;
+import org.mrk.enums.Category;
+import org.mrk.enums.Priority;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public final class OnceTask extends AbstractTask{
     }
 
     public String toString(){
-        return super.toString() + "\n";
+        return super.toString();
     }
 
 }

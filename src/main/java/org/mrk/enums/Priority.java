@@ -1,7 +1,7 @@
-package org.mrk.model.task.enums;
+package org.mrk.enums;
 
 public enum Priority {
-    HiGH,
+    HIGH,
     DEFAULT,
     LOW
 }

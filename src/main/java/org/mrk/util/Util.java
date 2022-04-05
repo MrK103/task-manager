@@ -2,6 +2,8 @@ package org.mrk.util;
 
 import lombok.experimental.UtilityClass;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @UtilityClass
@@ -12,6 +14,7 @@ public class Util {
          System.out.print(s+": ");
          return scanner.nextLine();
      }
+
 
      @SuppressWarnings("unused")
     public double validDouble(String d) {
@@ -26,15 +29,24 @@ public class Util {
         try {
             return Integer.parseInt(d);
         } catch (NumberFormatException ex) {
-            return validInt(input("Enter only whole numbers"));
+            return -1;
         }
     }
 
-    public static boolean checkAnswer(String s) {
-         if (s.equalsIgnoreCase("y") || s.equalsIgnoreCase("1")) {
-             return true;
-         } else if (s.equalsIgnoreCase("n") || s.equalsIgnoreCase("2")) {
-             return false;
-         } else return checkAnswer(input("You entered an incorrect answer, please answer Y/N (1/2)"));
-     }
+    public Date setDate(String textFromField) {
+        Date date;
+        String[] arrayDate;
+        if ((arrayDate = textFromField.split(" ")).length!=2){
+            return null;
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        try {
+            date = format.parse(arrayDate[0] + " " + arrayDate[1]);
+        } catch (ParseException e) {
+            return null;
+        }
+        return date;
+    }
+
 }

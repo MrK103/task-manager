@@ -1,30 +1,56 @@
 package org.mrk.builder.task;
 
+import org.mrk.interfaces.Task;
 import org.mrk.model.task.RepeatTask;
-import org.mrk.model.task.enums.Category;
+import org.mrk.enums.Category;
+import org.mrk.enums.Priority;
 
-import static org.mrk.util.Util.input;
-import static org.mrk.util.Util.validInt;
+import java.util.Date;
 
-public class RepeatTaskBuilder extends AbstractTaskBuilder {
+public class RepeatTaskBuilder {
 
-    public int setRepeatsTime(){
-        return validInt(input("Enter how many times repeat task"));
+    private int repeatsTime;
+    private int repeatsAfter;
+    private  String name;
+    private Priority priority;
+    private Date date;
+    private Category category;
+
+
+
+    public RepeatTaskBuilder setName(String name) {
+        this.name = name;
+        return this;
     }
-    public int setRepeatsAfter(){
-        return validInt(input("Enter how long to repeat after (seconds)"));
+    public RepeatTaskBuilder setPriority(Priority priority) {
+        this.priority = priority;
+        return this;
+    }
+    public RepeatTaskBuilder setCategory(Category category) {
+        this.category = category;
+        return this;
+    }
+    public RepeatTaskBuilder setDate(Date date) {
+        this.date = date;
+        return this;
     }
 
-    public Category setCategory() {
-        return Category.REPEATS;
+    public RepeatTaskBuilder setRepeatsTime(int i) {
+        this.repeatsTime = i;
+        return this;
+    }
+    public RepeatTaskBuilder setRepeatsAfter(int i) {
+        this.repeatsAfter = i;
+        return this;
     }
 
-    public RepeatTask builder(){
-        return new RepeatTask(setName()
-                ,setCategory()
-                ,setPriority()
-                ,setDate()
-                ,setRepeatsTime()
-                ,setRepeatsAfter());
+    public Task builder(){
+        return new RepeatTask(
+                 name
+                ,category
+                ,priority
+                ,date
+                ,repeatsTime
+                ,repeatsAfter);
     }
 }

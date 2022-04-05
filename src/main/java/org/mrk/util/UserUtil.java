@@ -1,17 +1,31 @@
 package org.mrk.util;
 
 import lombok.experimental.UtilityClass;
-import org.mrk.builder.task.TaskCreator;
 import org.mrk.builder.user.UserBuilder;
+import org.mrk.interfaces.Task;
 import org.mrk.interfaces.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
-import static org.mrk.util.Util.input;
-
 @UtilityClass
 public class UserUtil {
+    static String name;
+    static User user;
+
+    public static User getUser() {
+        return user;
+    }
+    public static void setUser(User user) {
+        UserUtil.user = user;
+    }
+    public static String getName(){
+        return name;
+    }
+    public static void setName(String name){
+        UserUtil.name = name;
+    }
 
     public static User checkRepName(User user, List<String > usersList){
         if (usersList.contains(user.getFirstName())) {
@@ -25,13 +39,20 @@ public class UserUtil {
         }
         return user;
     }
-    public static User createUser(){
-        return new UserBuilder()
-                .setFirstName(input("Enter your name"))
-                .setLastName(input("Enter last name"))
+
+    public static void createUserGui(String name,String lastName, TreeSet<Task> tasks){
+        List<String> usersList = FileUtil.loadUsersList();
+        if (usersList==null) usersList = new ArrayList<>();
+        User user = checkRepName(
+                new UserBuilder()
+                .setFirstName(name)
+                .setLastName(lastName)
                 .setId(1)
-                .setTasks(new TaskCreator().addTasks())
-                .build();
+                .setTasks(tasks)
+                .build(), usersList);
+        FileUtil.saveNewUser(user.getFirstName());
+        FileUtil.saveUserObj(user);
+        setUser(user);
     }
 
 }
