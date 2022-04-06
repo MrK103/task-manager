@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.mrk.interfaces.Controller;
 import org.mrk.util.Link;
+import org.mrk.util.ThreadUtil;
 
 import java.util.Objects;
 
@@ -16,6 +17,7 @@ public class MainWindow extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Link.currentLink));
         Scene scene = new Scene(loader.load());
         scene.setFill(Color.TRANSPARENT);
@@ -27,6 +29,8 @@ public class MainWindow extends Application{
         ((Controller)loader.getController()).init(stage);
         //((MainWindowController)loader.getController()).init(stage);
         stage.show();
+
+
     }
 
     public void run() {

@@ -17,7 +17,7 @@ public class TaskUtil {
     public static String deadLineTime(Date date){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         long toDeadLineMS  = deadLineMs(date);
-        if (toDeadLineMS == -1){
+        if (toDeadLineMS == 0){
             return "Deadline: " + format.format(date) + ". Times left: " + "Task overdue!";
         } else {
             Calendar calculate = Calendar.getInstance();
@@ -33,7 +33,7 @@ public class TaskUtil {
     public static long deadLineMs(Date date){
         Date nowDate = new Date();
         if (nowDate.getTime() > date.getTime()){
-            return -1;
+            return 0;
         }
         return date.getTime() - nowDate.getTime();
     }

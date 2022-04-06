@@ -6,6 +6,7 @@ import org.mrk.enums.Priority;
 import org.mrk.interfaces.Task;
 import org.mrk.util.TaskUtil;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
@@ -29,7 +30,11 @@ public abstract class AbstractTask implements Task {
 
     @Override
     public void realization() {
-        System.out.println("Task " + name + " completed successfully!");
+        JOptionPane.showMessageDialog(
+                null,
+                "Задача " + name + " выполнена!",
+                name,
+                JOptionPane.ERROR_MESSAGE);
     }
 
     @Override

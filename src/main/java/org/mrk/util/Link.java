@@ -5,11 +5,11 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Link {
     public static String currentLink;
-    public final static String MainMenu = "/fxml/MainWindowInterface.fxml";
-    public final static String TaskList = "/fxml/TaskListInterface.fxml";
-    public final static String TaskMenu = "/fxml/TaskMenuInterface.fxml";
-    public final static String UserMenu = "/fxml/UserNameInterface.fxml";
-    public final static String FirstMenu = "/fxml/FirstMenuInterface.fxml";
-    public final static String tempUrl = "temp";
+    public final static String LOGIN_MENU = "/fxml/LoginMenuInterface.fxml";
+    public final static String MAIN_MENU = "/fxml/MainMenuInterface.fxml";
+    public final static String CREATE_TASK = "/fxml/CreateTaskMenuInterface.fxml";
+    public final static String CREATE_USER = "/fxml/CreateUserInterface.fxml";
+    public final static String WELCOME_MENU = "/fxml/WelcomeMenuInterface.fxml";
+    public final static String TEMP_URL = "temp";
 
 }

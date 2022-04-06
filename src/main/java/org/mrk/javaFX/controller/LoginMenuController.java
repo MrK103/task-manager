@@ -16,7 +16,7 @@ import org.mrk.util.UserUtil;
 
 import java.util.Objects;
 
-public class MainWindowController implements Controller {
+public class LoginMenuController implements Controller {
     @FXML private Pane titlePane, btnNew, btnDel, btnOK;
     @FXML private ListView<String> listMenu;
     @FXML private ImageView btnMinimize, btnClose;
@@ -24,7 +24,8 @@ public class MainWindowController implements Controller {
     private MultipleSelectionModel<String> listSelections;
     private double x, y;
 
-    public MainWindowController() {
+    public LoginMenuController() {
+
     }
 
     public void loadUsersList(){
@@ -35,7 +36,6 @@ public class MainWindowController implements Controller {
     public void init(Stage stage) {
         loadUsersList();
         listSelections = listMenu.getSelectionModel();
-
         //перемещение окна
         titlePane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
@@ -50,7 +50,7 @@ public class MainWindowController implements Controller {
         btnMinimize.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
 
         btnNew.setOnMouseClicked(event -> {
-            Link.currentLink = Link.UserMenu;
+            Link.currentLink = Link.CREATE_USER;
             MainWindow loginMenu = new MainWindow();
             try {
                 loginMenu.start(stage);
@@ -62,7 +62,12 @@ public class MainWindowController implements Controller {
         btnOK.setOnMouseClicked(mouserEvent -> {
             if (listSelections.getSelectedItem()!=null){
             UserUtil.setUser(FileUtil.loadUserObj(listSelections.selectedItemProperty().get()));
-            Link.currentLink = Link.TaskList;
+            Link.currentLink = Link.MAIN_MENU;
+
+//            Thread thread = new Thread(new ThreadUtil(1));
+//            thread.setDaemon(true);
+//            thread.start();
+
             MainWindow mainWindow = new MainWindow();
             try {
                 mainWindow.start(stage);

@@ -3,6 +3,11 @@
     -fx-background-radius: 28;
 }
 
+.tabPane {
+    -fx-background-color: linear-gradient(to bottom right, #FF7F50, #6A5ACD);
+    -fx-background-radius: 28;
+}
+
 .mainPane {
     -fx-background-color: linear-gradient(to bottom right, #FF7F50, #6A5ACD);
     -fx-background-radius: 10 10 20 20;

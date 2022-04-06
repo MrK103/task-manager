@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="264.0" prefWidth="324.0" stylesheets="@../css/MainWindowStyle.css"
             xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.mrk.javaFX.controller.FirstMenuController">
+            fx:controller="org.mrk.javaFX.controller.WelcomeMenuController">
    <Pane fx:id="mainPane" layoutX="8.0" layoutY="32.0" prefHeight="228.0" prefWidth="308.0" styleClass="mainPane">
       <Pane fx:id="btnNext" disable="true" layoutX="83.0" layoutY="154.0" prefHeight="42.0" prefWidth="143.0"
             styleClass="highlight">

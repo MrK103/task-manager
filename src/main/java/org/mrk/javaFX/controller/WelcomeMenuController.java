@@ -8,7 +8,7 @@ import org.mrk.interfaces.Controller;
 import org.mrk.util.Link;
 import org.mrk.javaFX.ui.MainWindow;
 
-public class FirstMenuController implements Controller {
+public class WelcomeMenuController implements Controller {
     @FXML
     private Pane mainPane, btnNext, titlePane;
     @FXML
@@ -18,7 +18,7 @@ public class FirstMenuController implements Controller {
 
     private double x, y;
 
-    public FirstMenuController() {
+    public WelcomeMenuController() {
     }
 
     public void init(Stage stage) {
@@ -39,7 +39,7 @@ public class FirstMenuController implements Controller {
         mainPane.setOnMouseExited(event -> btnNext.setDisable(true));
 
         btnNext.setOnMouseClicked(event -> {
-            Link.currentLink = Link.MainMenu;
+            Link.currentLink = Link.LOGIN_MENU;
             MainWindow mainWindow = new MainWindow();
             try {
                 mainWindow.start(stage);

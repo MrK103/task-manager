@@ -14,7 +14,7 @@ import org.mrk.util.UserUtil;
 
 import java.util.TreeSet;
 
-public class UserMenuController implements Controller {
+public class CreateUserMenuController implements Controller {
     @FXML private Pane titlePane, btnOK;
     @FXML private ImageView btnMinimize, btnClose;
     @FXML private TextField nameField, surNameField;
@@ -23,7 +23,7 @@ public class UserMenuController implements Controller {
 
     private double x, y;
 
-    public UserMenuController() {
+    public CreateUserMenuController() {
     }
 
     public void init(Stage stage) {
@@ -53,24 +53,14 @@ public class UserMenuController implements Controller {
             }else labelLastName.setTextFill(Color.web("#000000"));
 
             UserUtil.createUserGui(nameField.getText(), surNameField.getText(), new TreeSet<>());
-            if (radioBTN.isSelected()) {
-                Link.currentLink = Link.TaskMenu;
-                MainWindow mainWindow = new MainWindow();
-                try {
-                    mainWindow.start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Link.currentLink = Link.MainMenu;
-                MainWindow mainWindow = new MainWindow();
-                try {
-                    mainWindow.start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            MainWindow mainWindow = new MainWindow();
+            if (radioBTN.isSelected()) Link.currentLink = Link.CREATE_TASK;
+            else Link.currentLink = Link.LOGIN_MENU;
+            try {
+                mainWindow.start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
        });
-
     }
 }

@@ -16,7 +16,7 @@ import org.mrk.util.*;
 
 import java.util.Arrays;
 
-public class TaskMenuController implements Controller {
+public class CreateTaskMenuController implements Controller {
     @FXML
     public DatePicker datePicker;
     @FXML
@@ -38,7 +38,7 @@ public class TaskMenuController implements Controller {
     private final ObservableList<Category> listCategory =
             FXCollections.observableArrayList(Arrays.asList(Category.ONCE, Category.REPEATS));
 
-    public TaskMenuController() {
+    public CreateTaskMenuController() {
     }
 
     public void init(Stage stage) {
@@ -50,7 +50,6 @@ public class TaskMenuController implements Controller {
 
         boxCategory.setItems(listCategory);
         boxCategory.setValue(listCategory.get(0));
-        setInvisibleFiled();
 
         //перемещение окна
         titlePane.setOnMousePressed(mouseEvent -> {
@@ -65,16 +64,8 @@ public class TaskMenuController implements Controller {
         btnClose.setOnMouseClicked(mouseEvent -> stage.close());
         btnMinimize.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
 
-        boxCategory.setOnAction(event -> {
-            if (boxCategory.getValue().equals(Category.ONCE)){
-                setInvisibleFiled();
-            } else {
-                repeatsField.setVisible(true);
-                timesRepField.setVisible(true);
-                labelTimeRep.setVisible(true);
-                labelRep.setVisible(true);
-            }
-        });
+        boxCategory.setOnAction(event -> setVisibleForRepeatsField(!boxCategory.getValue().equals(Category.ONCE)));
+
         btnOK.setOnMouseClicked(mouserEvent -> {
             //проверка поля имя
             if (nameField.getText().isEmpty()){
@@ -112,8 +103,14 @@ public class TaskMenuController implements Controller {
                                 , boxPriority.getValue()
                                 , Util.setDate(datePicker.getValue(), dateField.getText())));
             }
+
             FileUtil.saveUserObj(UserUtil.getUser());
-            Link.currentLink = Link.TaskList;
+
+            Thread t1 = new Thread(new ThreadUtil(false));
+            t1.setDaemon(true);
+            t1.start();
+
+            Link.currentLink = Link.MAIN_MENU;
             MainWindow mainWindow = new MainWindow();
             try {
                 mainWindow.start(stage);
@@ -123,10 +120,10 @@ public class TaskMenuController implements Controller {
             });
     }
 
-    private void setInvisibleFiled(){
-        repeatsField.setVisible(false);
-        timesRepField.setVisible(false);
-        labelTimeRep.setVisible(false);
-        labelRep.setVisible(false);
+    private void setVisibleForRepeatsField(boolean visible){
+        repeatsField.setVisible(visible);
+        timesRepField.setVisible(visible);
+        labelTimeRep.setVisible(visible);
+        labelRep.setVisible(visible);
     }
 }

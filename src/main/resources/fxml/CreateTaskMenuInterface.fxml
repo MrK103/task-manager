@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="264.0" prefWidth="324.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mrk.javaFX.controller.TaskMenuController">
-   <Pane layoutX="8.0" layoutY="32.0" prefHeight="228.0" prefWidth="311.0" styleClass="mainPane" stylesheets="@../css/MainWindowStyle.css">
+<AnchorPane prefHeight="264.0" prefWidth="324.0" stylesheets="@../css/MainWindowStyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mrk.javaFX.controller.CreateTaskMenuController">
+   <Pane layoutX="4.0" layoutY="32.0" prefHeight="228.0" prefWidth="316.0" styleClass="mainPane" stylesheets="@../css/MainWindowStyle.css">
       <Pane fx:id="btnOK" layoutX="236.0" layoutY="174.0" prefHeight="42.0" prefWidth="61.0" styleClass="highlight">
          <Label layoutX="17.0" layoutY="11.0" text="OK" textFill="#ff75ef">
             <font>
@@ -29,18 +29,18 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelTimeRep" layoutX="137.0" layoutY="187.0" prefHeight="27.0" prefWidth="114.0" text="Повтор через">
+      <Label fx:id="labelTimeRep" layoutX="137.0" layoutY="187.0" prefHeight="27.0" prefWidth="98.0" text="Повтор через" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelRep" layoutX="137.0" layoutY="153.0" prefHeight="27.0" prefWidth="114.0" text="Кол-во повторов">
+      <Label fx:id="labelRep" layoutX="137.0" layoutY="153.0" prefHeight="27.0" prefWidth="114.0" text="Кол-во повторов" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="repeatsField" layoutX="14.0" layoutY="153.0" prefHeight="27.0" prefWidth="114.0" promptText="10 " />
-      <TextField fx:id="timesRepField" layoutX="14.0" layoutY="187.0" prefHeight="27.0" prefWidth="114.0" promptText="10000" />
+      <TextField fx:id="repeatsField" layoutX="14.0" layoutY="153.0" prefHeight="27.0" prefWidth="114.0" promptText="10 " visible="false" />
+      <TextField fx:id="timesRepField" layoutX="14.0" layoutY="187.0" prefHeight="27.0" prefWidth="114.0" promptText="10000" visible="false" />
       <TextField fx:id="nameField" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="114.0" promptText="name" />
       <ChoiceBox fx:id="boxPriority" layoutX="14.0" layoutY="89.0" prefHeight="25.0" prefWidth="114.0" />
       <Label layoutX="137.0" layoutY="88.0" prefHeight="27.0" prefWidth="84.0" text="Приоритет">

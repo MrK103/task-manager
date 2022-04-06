@@ -5,7 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.mrk.interfaces.Controller;
 import org.mrk.interfaces.Task;
@@ -14,14 +16,17 @@ import org.mrk.util.Link;
 import org.mrk.javaFX.ui.MainWindow;
 import org.mrk.enums.Category;
 import org.mrk.util.FileUtil;
+import org.mrk.util.ThreadUtil;
 import org.mrk.util.UserUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class TaskListController implements Controller {
+public class MainMenuController implements Controller {
     @FXML
-    private Pane titlePane, btnBack, btnAdd, btnDel;
+    private Label lblDel, lblAdd, lblExit, lblUpdate;
+    @FXML
+    private Pane titlePane, btnBack, btnAdd, btnDel, btnUpdate;
     @FXML
     private ListView<Task> listMenu;
     @FXML
@@ -42,12 +47,7 @@ public class TaskListController implements Controller {
 
     private double x, y;
 
-    public TaskListController() {
-    }
-
-    public void setTaskList(ObservableList<Task> taskList1){
-        listMenu.setItems(taskList1);
-        listSelections = listMenu.getSelectionModel();
+    public MainMenuController() {
     }
 
     public void init(Stage stage) {
@@ -66,7 +66,7 @@ public class TaskListController implements Controller {
         sortMenu.setOnAction(event -> sortList(sortMenu.getValue()));
 
         btnAdd.setOnMouseClicked(event -> {
-            Link.currentLink = Link.TaskMenu;
+            Link.currentLink = Link.CREATE_TASK;
             MainWindow taskMenuWindow = new MainWindow();
             try {
                 taskMenuWindow.start(stage);
@@ -75,12 +75,19 @@ public class TaskListController implements Controller {
             }
         });
 
+        btnUpdate.setOnMouseClicked(event -> setFilter(filterMenu.getValue()));
+
         btnDel.setOnMouseClicked(event -> {
             if (listSelections.getSelectedItem() != null) {
                 UserUtil.getUser().getTasks().remove(listSelections.getSelectedItem());
                 int id = listSelections.getSelectedIndex();
                 if (id != 0) --id;
                 FileUtil.saveUserObj(UserUtil.getUser());
+                //
+                Thread thread = new Thread(new ThreadUtil(listSelections.getSelectedItem().getIdTask()));
+                thread.setDaemon(true);
+                thread.start();
+                //
                 setFilter(filterMenu.getValue());
                 listSelections.select(id);
             }
@@ -99,7 +106,7 @@ public class TaskListController implements Controller {
         });
 
         btnBack.setOnMouseClicked(event -> {
-            Link.currentLink = Link.MainMenu;
+            Link.currentLink = Link.LOGIN_MENU;
             MainWindow mainWindow = new MainWindow();
             try {
                 mainWindow.start(stage);
@@ -155,5 +162,24 @@ public class TaskListController implements Controller {
             case PRIORITY -> setTaskList(FXCollections.observableList(taskList.stream()
                     .sorted(Comparator.comparing(Task::getPriority)).toList()));
         }
+    }
+
+    public void setTaskList(ObservableList<Task> taskList){
+        listMenu.setItems(taskList);
+        listSelections = listMenu.getSelectionModel();
+    }
+
+    public void onMouseEntered(MouseEvent mouseEvent) {
+        if (mouseEvent.getSource().equals(btnAdd)) lblAdd.setTextFill(Color.web("#ff00bf"));
+        else if (mouseEvent.getSource().equals(btnDel)) lblDel.setTextFill(Color.web("#ff00bf"));
+        else if (mouseEvent.getSource().equals(btnUpdate)) lblUpdate.setTextFill(Color.web("#ff00bf"));
+        else if (mouseEvent.getSource().equals(btnBack)) lblExit.setTextFill(Color.web("#ff00bf"));
+    }
+
+    public void onMouseExit(MouseEvent mouseEvent) {
+        if (mouseEvent.getSource().equals(btnAdd)) lblAdd.setTextFill(Color.web("#ff75ef"));
+        else if (mouseEvent.getSource().equals(btnDel)) lblDel.setTextFill(Color.web("#ff75ef"));
+        else if (mouseEvent.getSource().equals(btnUpdate)) lblUpdate.setTextFill(Color.web("#ff75ef"));
+        else if (mouseEvent.getSource().equals(btnBack)) lblExit.setTextFill(Color.web("#ff75ef"));
     }
 }
