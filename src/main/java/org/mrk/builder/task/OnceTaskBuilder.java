@@ -14,8 +14,6 @@ public class OnceTaskBuilder{
     private  Date date;
     private Category category;
 
-
-
     public OnceTaskBuilder setName(String name) {
         this.name = name;
         return this;

@@ -16,7 +16,7 @@ public abstract class AbstractTask implements Task {
 
     private final String name;
     private final Priority priority;
-    private final Date date;
+    protected final Date date;
     private final int idTask;
     private final Category category;
 
@@ -30,11 +30,11 @@ public abstract class AbstractTask implements Task {
 
     @Override
     public void realization() {
-        JOptionPane.showMessageDialog(
+        new Thread(() -> JOptionPane.showMessageDialog(
                 null,
                 "Задача " + name + " выполнена!",
                 name,
-                JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE)).start();
     }
 
     @Override
@@ -45,7 +45,9 @@ public abstract class AbstractTask implements Task {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof AbstractTask task)) return false;
+        if (!(obj instanceof AbstractTask task)) {
+            return false;
+        }
         return idTask == task.idTask;
     }
 

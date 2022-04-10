@@ -1,5 +1,6 @@
 package org.mrk.javaFX.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,20 +10,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.mrk.interfaces.Controller;
 import org.mrk.interfaces.Task;
 import org.mrk.enums.SortMenu;
-import org.mrk.util.Link;
+import org.mrk.util.*;
 import org.mrk.javaFX.ui.MainWindow;
 import org.mrk.enums.Category;
-import org.mrk.util.FileUtil;
-import org.mrk.util.ThreadUtil;
-import org.mrk.util.UserUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
-public class MainMenuController implements Controller {
+public class MainMenuController extends GeneralController{
     @FXML
     private Label lblDel, lblAdd, lblExit, lblUpdate;
     @FXML
@@ -39,22 +37,21 @@ public class MainMenuController implements Controller {
     private Label userName;
 
     private MultipleSelectionModel<Task> listSelections; //модель listMenu
-    private ObservableList<Task> taskList; //лист с задачми obj
+    private  ObservableList<Task> taskList = FXCollections.observableList(
+            UserUtil.getCurrentUser().getTasks().stream().toList()); //лист с задачми obj
     private final ObservableList<Category> filterList = FXCollections.observableArrayList(
             Arrays.asList(Category.ALL, Category.ONCE, Category.REPEATS));
     private final ObservableList<SortMenu> sortedList = FXCollections.observableArrayList(
             Arrays.asList(SortMenu.DATE, SortMenu.NAME, SortMenu.PRIORITY));
 
-    private double x, y;
-
     public MainMenuController() {
     }
 
     public void init(Stage stage) {
-        userName.setText(UserUtil.getUser().getFirstName() + " " +  UserUtil.getUser().getLastName());
-        taskList = FXCollections.observableList(UserUtil.getUser().getTasks().stream().toList());
-        setTaskList(taskList);
-
+        initGeneralController(btnMinimize, btnClose, titlePane, stage);
+        userName.setText(UserUtil.getCurrentUser().getFirstName() + " " +  UserUtil.getCurrentUser().getLastName());
+        listMenu.setItems(taskList);
+        listSelections = listMenu.getSelectionModel();
         //Фильтрация
         filterMenu.setItems(filterList);
         filterMenu.setValue(filterList.get(0));
@@ -79,10 +76,10 @@ public class MainMenuController implements Controller {
 
         btnDel.setOnMouseClicked(event -> {
             if (listSelections.getSelectedItem() != null) {
-                UserUtil.getUser().getTasks().remove(listSelections.getSelectedItem());
+                UserUtil.getCurrentUser().getTasks().remove(listSelections.getSelectedItem());
                 int id = listSelections.getSelectedIndex();
                 if (id != 0) --id;
-                FileUtil.saveUserObj(UserUtil.getUser());
+                FileUtil.saveUserObj(UserUtil.getCurrentUser());
                 //
                 Thread thread = new Thread(new ThreadUtil(listSelections.getSelectedItem().getIdTask()));
                 thread.setDaemon(true);
@@ -95,16 +92,6 @@ public class MainMenuController implements Controller {
 
         );
 
-        //перемещение окна
-        titlePane.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-        titlePane.setOnMouseDragged(mouseEvent -> {
-            stage.setX(mouseEvent.getScreenX() - x);
-            stage.setY(mouseEvent.getScreenY() - y);
-        });
-
         btnBack.setOnMouseClicked(event -> {
             Link.currentLink = Link.LOGIN_MENU;
             MainWindow mainWindow = new MainWindow();
@@ -115,16 +102,16 @@ public class MainMenuController implements Controller {
             }
         });
 
-        btnClose.setOnMouseClicked(mouseEvent -> stage.close());
-        btnMinimize.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
+        listMenu.setOnMouseMoved(event -> setFilter(filterMenu.getValue()));
     }
+
 
     public void setFilter(Category category){
         switch (category){
             case ALL -> {
                 taskList = FXCollections.observableList(
                         UserUtil
-                        .getUser()
+                        .getCurrentUser()
                         .getTasks()
                         .stream()
                         .toList());
@@ -133,7 +120,7 @@ public class MainMenuController implements Controller {
             case ONCE -> {
                 taskList = FXCollections.observableList(
                         UserUtil
-                        .getUser()
+                        .getCurrentUser()
                         .getTasks()
                         .stream()
                         .filter(AbstractTask -> AbstractTask.getCategory().equals(Category.ONCE))
@@ -143,7 +130,7 @@ public class MainMenuController implements Controller {
             case REPEATS -> {
                 taskList = FXCollections.observableList(
                         UserUtil
-                        .getUser()
+                        .getCurrentUser()
                         .getTasks()
                         .stream()
                         .filter(AbstractTask -> AbstractTask.getCategory().equals(Category.REPEATS))
@@ -155,18 +142,13 @@ public class MainMenuController implements Controller {
 
     public void sortList(SortMenu sortMenu){
         switch (sortMenu) {
-            case DATE -> setTaskList(FXCollections.observableList(taskList.stream()
+            case DATE -> listMenu.setItems(FXCollections.observableList(taskList.stream()
                     .sorted(Comparator.comparing(Task::getDate)).toList()));
-            case NAME -> setTaskList(FXCollections.observableList(taskList.stream()
+            case NAME -> listMenu.setItems(FXCollections.observableList(taskList.stream()
                     .sorted(Comparator.comparing(Task::getName)).toList()));
-            case PRIORITY -> setTaskList(FXCollections.observableList(taskList.stream()
+            case PRIORITY -> listMenu.setItems(FXCollections.observableList(taskList.stream()
                     .sorted(Comparator.comparing(Task::getPriority)).toList()));
         }
-    }
-
-    public void setTaskList(ObservableList<Task> taskList){
-        listMenu.setItems(taskList);
-        listSelections = listMenu.getSelectionModel();
     }
 
     public void onMouseEntered(MouseEvent mouseEvent) {

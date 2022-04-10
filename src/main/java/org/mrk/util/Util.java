@@ -9,22 +9,21 @@ import java.util.*;
 
 @UtilityClass
 public class Util {
-     private static final Scanner scanner = new Scanner(System.in);
+//     private static final Scanner scanner = new Scanner(System.in);
 
-     public static String input(String s){
-         System.out.print(s+": ");
-         return scanner.nextLine();
-     }
-
-
-     @SuppressWarnings("unused")
-    public double validDouble(String d) {
-        try {
-            return Double.parseDouble(d);
-        } catch (NumberFormatException ex) {
-            return validDouble(input("Enter only numbers"));
-        }
-    }
+//     public static String input(String s){
+//         System.out.print(s+": ");
+//         return scanner.nextLine();
+//     }
+//
+//     @SuppressWarnings("unused")
+//    public double validDouble(String d) {
+//        try {
+//            return Double.parseDouble(d);
+//        } catch (NumberFormatException ex) {
+//            return validDouble(input("Enter only numbers"));
+//        }
+//    }
 
     public static int validInt(String d) {
         try {
@@ -34,13 +33,14 @@ public class Util {
         }
     }
 
-    public Date setDate(LocalDate data, String time) {
+    public Date setDate(LocalDate localDate, String hours, String minutes) {
         Date date;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        if (data == null) return null;
-        if (time.isEmpty()) time = "00:00";
+        if (localDate == null) return null;
+        if (hours.isEmpty()) hours = "00";
+        if (minutes.isEmpty()) minutes = "00";
         try {
-            date = format.parse(data + " " + time);
+            date = format.parse(localDate + " " + hours+":"+minutes);
         } catch (ParseException e) {
             return null;
         }

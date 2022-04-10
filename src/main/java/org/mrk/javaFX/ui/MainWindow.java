@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.mrk.interfaces.Controller;
 import org.mrk.util.Link;
-import org.mrk.util.ThreadUtil;
 
 import java.util.Objects;
 
@@ -24,13 +23,9 @@ public class MainWindow extends Application{
         stage.setScene(scene);
         if (stage.getStyle() != StageStyle.TRANSPARENT) stage.initStyle(StageStyle.TRANSPARENT);
         stage.setResizable(false);
-        //stage.setTitle("Calculator");
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
         ((Controller)loader.getController()).init(stage);
-        //((MainWindowController)loader.getController()).init(stage);
         stage.show();
-
-
     }
 
     public void run() {

@@ -16,16 +16,14 @@ import org.mrk.util.UserUtil;
 
 import java.util.Objects;
 
-public class LoginMenuController implements Controller {
+public class LoginMenuController extends GeneralController implements Controller {
     @FXML private Pane titlePane, btnNew, btnDel, btnOK;
     @FXML private ListView<String> listMenu;
     @FXML private ImageView btnMinimize, btnClose;
 
     private MultipleSelectionModel<String> listSelections;
-    private double x, y;
 
     public LoginMenuController() {
-
     }
 
     public void loadUsersList(){
@@ -34,20 +32,10 @@ public class LoginMenuController implements Controller {
         listMenu.setItems(userNames);
     }
     public void init(Stage stage) {
+        initGeneralController(btnMinimize, btnClose, titlePane, stage);
         loadUsersList();
         listSelections = listMenu.getSelectionModel();
         //перемещение окна
-        titlePane.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-        titlePane.setOnMouseDragged(mouseEvent -> {
-            stage.setX(mouseEvent.getScreenX()-x);
-            stage.setY(mouseEvent.getScreenY()-y);
-        });
-
-        btnClose.setOnMouseClicked(mouseEvent -> stage.close());
-        btnMinimize.setOnMouseClicked(mouseEvent -> stage.setIconified(true));
 
         btnNew.setOnMouseClicked(event -> {
             Link.currentLink = Link.CREATE_USER;
@@ -61,13 +49,8 @@ public class LoginMenuController implements Controller {
 
         btnOK.setOnMouseClicked(mouserEvent -> {
             if (listSelections.getSelectedItem()!=null){
-            UserUtil.setUser(FileUtil.loadUserObj(listSelections.selectedItemProperty().get()));
+            UserUtil.setCurrentUser(FileUtil.loadUserObj(listSelections.selectedItemProperty().get()));
             Link.currentLink = Link.MAIN_MENU;
-
-//            Thread thread = new Thread(new ThreadUtil(1));
-//            thread.setDaemon(true);
-//            thread.start();
-
             MainWindow mainWindow = new MainWindow();
             try {
                 mainWindow.start(stage);

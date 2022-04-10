@@ -5,9 +5,10 @@ import org.mrk.interfaces.User;
 import org.mrk.model.user.UserModel;
 
 import java.util.TreeSet;
+import java.util.UUID;
 
 public class UserBuilder {
-        private int id;
+        private UUID id;
         private String lastName;
         private String firstName;
         private TreeSet<Task> tasks;
@@ -17,7 +18,7 @@ public class UserBuilder {
             return this;
         }
 
-        public UserBuilder setId(int id) {
+        public UserBuilder setId(UUID id) {
             this.id = id;
             return this;
         }

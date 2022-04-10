@@ -41,11 +41,22 @@ public class FileUtil {
     }
 
     public static Optional<Object> deserialize(String name){
-        try (FileInputStream fis = new FileInputStream(name);
-             ObjectInputStream ois = new ObjectInputStream(fis)){
-             return Optional.of(ois.readObject());
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream(name);
+            ois = new ObjectInputStream(fis);
+            return Optional.of(ois.readObject());
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("User not found, this user will be deleted");
+            deleteUser(name);
+        } finally {
+            try {
+                if (fis!= null) fis.close();
+                if (ois!=null) ois.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return Optional.empty();
     }
@@ -66,6 +77,7 @@ public class FileUtil {
             }
         }
     }
+
     public static List<String> loadUsersList(){
         BufferedReader br = null;
         try {

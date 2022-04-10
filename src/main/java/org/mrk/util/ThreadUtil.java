@@ -2,6 +2,7 @@ package org.mrk.util;
 
 import org.mrk.interfaces.Task;
 import org.mrk.interfaces.User;
+import org.mrk.model.task.RepeatTask;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -9,19 +10,22 @@ import java.util.List;
 
 public class ThreadUtil implements Runnable{
 
-    public ThreadUtil(){
-    }
     public ThreadUtil(boolean showOverdueTask){
-    this.showOverdueTask = showOverdueTask;
+        this.showOverdueTask = showOverdueTask;
     }
+
+    @SuppressWarnings("removal")
     public ThreadUtil(int taskIdForDelete){
-        //this.taskIdForDelete = taskIdForDelete;
-        listOfTask.removeIf(thread -> thread.getName().equals(String.valueOf(taskIdForDelete)));
+        listOfTask.removeIf(thread -> {
+            boolean found = thread.getName().equals(String.valueOf(taskIdForDelete));
+            if (found) thread.stop();
+            return found;
+        });
+
     }
 
     private static final List<Thread> listOfTask = new ArrayList<>();
     private boolean showOverdueTask = false;
-    //private int taskIdForDelete;
 
     private void init(){
         List<String> userNameList = FileUtil.loadUsersList();
@@ -30,11 +34,15 @@ public class ThreadUtil implements Runnable{
         userNameList.forEach(name -> userObjList.add(FileUtil.loadUserObj(name)));
 
         for (User user : userObjList) {
+            //ju
+            if (user == null) return;
+            if (user.getTasks() == null) return;
+
             for (Task task : user.getTasks()) {
                 if (TaskUtil.deadLineMs(task.getDate()) == 0) {
                     showOverdueTaskDialog(user, task, showOverdueTask);
                 } else {
-                    Thread thread = new Thread(runnable(task), String.valueOf(task.getIdTask()));
+                    Thread thread = new Thread(runnable(task, user), String.valueOf(task.getIdTask()));
                     if (listOfTask.stream().noneMatch(thread1 ->
                             thread1.getName().equals(String.valueOf(task.getIdTask())))) {
                         listOfTask.add(thread);
@@ -46,15 +54,23 @@ public class ThreadUtil implements Runnable{
         listOfTask.forEach(thread -> {
             if (thread.getState().equals(Thread.State.NEW)) thread.start();
         });
-
-        System.out.println(listOfTask.size());
     }
 
-    public Runnable runnable(Task task){
+    public Runnable runnable(Task task, User user){
         return () -> {
             try {
                 Thread.sleep(TaskUtil.deadLineMs(task.getDate()));
-                task.realization();
+                if (task instanceof RepeatTask repeatTask){
+                    while (repeatTask.getRepeat().get()>0){
+                        repeatTask.realization();
+                        FileUtil.saveUserObj(user);
+                        if (user.getFirstName().equals(UserUtil.getCurrentUser().getFirstName())){
+                            UserUtil.setCurrentUser(user);
+                        }
+                        Thread.sleep(TaskUtil.deadLineMs(task.getDate()));
+                    }
+                } else task.realization();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -72,14 +88,14 @@ public class ThreadUtil implements Runnable{
             if (result == JOptionPane.OK_OPTION) deleteOverdueTask(user, task);
         }
     }
+
     public void deleteOverdueTask(User user, Task task){
         User newUser = FileUtil.loadUserObj(user.getFirstName());
         assert newUser != null;
         newUser.getTasks().remove(task);
         FileUtil.saveUserObj(newUser);
-        UserUtil.setUser(newUser);
+        UserUtil.setCurrentUser(newUser);
     }
-
 
     @Override
     public void run() {

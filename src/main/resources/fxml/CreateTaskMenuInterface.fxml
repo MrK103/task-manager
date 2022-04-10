@@ -24,7 +24,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelDate" layoutX="197.0" layoutY="53.0" prefHeight="27.0" prefWidth="78.0" text="Дата задачи">
+      <Label fx:id="labelDate" layoutX="212.0" layoutY="53.0" prefHeight="27.0" prefWidth="78.0" text="Дата задачи">
          <font>
             <Font size="14.0" />
          </font>
@@ -40,7 +40,7 @@
          </font>
       </Label>
       <TextField fx:id="repeatsField" layoutX="14.0" layoutY="153.0" prefHeight="27.0" prefWidth="114.0" promptText="10 " visible="false" />
-      <TextField fx:id="timesRepField" layoutX="14.0" layoutY="187.0" prefHeight="27.0" prefWidth="114.0" promptText="10000" visible="false" />
+      <TextField fx:id="timesRepField" layoutX="14.0" layoutY="187.0" prefHeight="27.0" prefWidth="114.0" promptText="10 (second)" visible="false" />
       <TextField fx:id="nameField" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="114.0" promptText="name" />
       <ChoiceBox fx:id="boxPriority" layoutX="14.0" layoutY="89.0" prefHeight="25.0" prefWidth="114.0" />
       <Label layoutX="137.0" layoutY="88.0" prefHeight="27.0" prefWidth="84.0" text="Приоритет">
@@ -54,8 +54,14 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="54.0" prefHeight="25.0" prefWidth="114.0" promptText="20.12.2022" />
-      <TextField fx:id="dateField" layoutX="137.0" layoutY="53.0" prefHeight="27.0" prefWidth="46.0" promptText="21:22" />
+      <DatePicker fx:id="datePicker" editable="false" layoutX="14.0" layoutY="54.0" prefHeight="25.0" prefWidth="114.0" promptText="20.12.2022" />
+      <TextField fx:id="hoursField" layoutX="137.0" layoutY="53.0" prefHeight="27.0" prefWidth="28.0" promptText="00" />
+      <TextField fx:id="minutesField" layoutX="175.0" layoutY="53.0" prefHeight="27.0" prefWidth="28.0" promptText="00" />
+      <Label layoutX="167.0" layoutY="47.0" prefHeight="17.0" prefWidth="6.0" text=":" textFill="#111111">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </Pane>
    <Pane fx:id="titlePane" layoutX="8.0" layoutY="-4.0" prefHeight="36.0" prefWidth="311.0">
       <ImageView fx:id="btnClose" fitHeight="16.0" fitWidth="16.0" layoutX="275.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
@@ -64,7 +70,7 @@
       <ImageView fx:id="btnMinimize" fitHeight="16.0" fitWidth="16.0" layoutX="252.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@/images/hide.png" />
       </ImageView>
-      <Label layoutX="49.0" layoutY="11.0" text="User name" textFill="WHITE" />
+      <Label fx:id="labelTitle" layoutX="49.0" layoutY="11.0" text="User name" textFill="WHITE" />
       <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@/images/icon.png" />
       </ImageView>

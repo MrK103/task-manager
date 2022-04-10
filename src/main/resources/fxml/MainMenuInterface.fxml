@@ -18,6 +18,11 @@
             </font>
          </Label>
       </Pane>
+      <Label layoutX="100.0" layoutY="97.0" text="Задач нет" textFill="#0000005f">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
       <ListView fx:id="listMenu" layoutX="7.0" layoutY="14.0" prefHeight="200.0" prefWidth="296.0" style="-fx-background-color: #00000070;" styleClass="listMenu" />
       <ChoiceBox fx:id="filterMenu" layoutX="312.0" layoutY="14.0" prefHeight="25.0" prefWidth="138.0" />
       <ChoiceBox fx:id="sortMenu" layoutX="312.0" layoutY="55.0" prefHeight="25.0" prefWidth="138.0" />

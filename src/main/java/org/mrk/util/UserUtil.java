@@ -8,17 +8,18 @@ import org.mrk.interfaces.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.UUID;
 
 @UtilityClass
 public class UserUtil {
-    static String name;
-    static User user;
+    private static String name;
+    private static User currentUser;
 
-    public static User getUser() {
-        return user;
+    public static User getCurrentUser() {
+        return currentUser;
     }
-    public static void setUser(User user) {
-        UserUtil.user = user;
+    public static void setCurrentUser(User user) {
+        UserUtil.currentUser = user;
     }
     public static String getName(){
         return name;
@@ -27,32 +28,32 @@ public class UserUtil {
         UserUtil.name = name;
     }
 
-    public static User checkRepName(User user, List<String > usersList){
+    public static User checkNameRep(User user, List<String > usersList){
         if (usersList.contains(user.getFirstName())) {
             user =  new UserBuilder()
                     .setFirstName("new_" + user.getFirstName())
                     .setLastName(user.getLastName())
                     .setId(user.getId())
-                    .setTasks(new TreeSet<>())
+                    .setTasks(user.getTasks())
                     .build();
-            return checkRepName(user, usersList);
+            return checkNameRep(user, usersList);
         }
         return user;
     }
 
-    public static void createUserGui(String name,String lastName, TreeSet<Task> tasks){
+    public static void createUser(String name, String lastName, TreeSet<Task> tasks){
         List<String> usersList = FileUtil.loadUsersList();
         if (usersList==null) usersList = new ArrayList<>();
-        User user = checkRepName(
+        User user = checkNameRep(
                 new UserBuilder()
                 .setFirstName(name)
                 .setLastName(lastName)
-                .setId(1)
+                .setId(UUID.randomUUID())
                 .setTasks(tasks)
                 .build(), usersList);
         FileUtil.saveNewUser(user.getFirstName());
         FileUtil.saveUserObj(user);
-        setUser(user);
+        setCurrentUser(user);
     }
 
 }

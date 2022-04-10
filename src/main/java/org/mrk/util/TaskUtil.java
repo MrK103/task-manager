@@ -22,10 +22,21 @@ public class TaskUtil {
         } else {
             Calendar calculate = Calendar.getInstance();
             calculate.setTimeInMillis(toDeadLineMS);
-            String time = ((calculate.get(Calendar.DAY_OF_YEAR) - 1 ) * 24)
-                    + (calculate.get(Calendar.HOUR_OF_DAY) - 11+8)
-                    + ":" + calculate.get(Calendar.MINUTE)
-                    + ":" + calculate.get(Calendar.SECOND);
+
+            int dayAndHours = ((calculate.get(Calendar.DAY_OF_YEAR) - 1 ) * 24)
+            + (calculate.get(Calendar.HOUR_OF_DAY) - 11+8);
+            int day = dayAndHours/24;
+            int hours = dayAndHours%24;
+            int minute = calculate.get(Calendar.MINUTE);
+            int second = calculate.get(Calendar.SECOND);
+
+            String time = "";
+
+            if (day!=0) time = day + "d. ";
+            if (hours != 0) time += hours + ":";
+            if (minute != 0) time += minute + ":";
+            time += second;
+
             return "Deadline: " + format.format(date) + ". Times left: " + time;
         }
     }

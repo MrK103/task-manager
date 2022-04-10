@@ -31,6 +31,16 @@
             </font>
          </Label>
       </Pane>
+      <Label layoutX="44.0" layoutY="81.0" text="Пользователей" textFill="#0000005a">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="98.0" layoutY="108.0" text="нет" textFill="#0000005a">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
       <ListView fx:id="listMenu" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000070;" styleClass="listMenu" />
    </Pane>
    <Pane fx:id="titlePane" layoutX="8.0" layoutY="-4.0" prefHeight="36.0" prefWidth="311.0">
