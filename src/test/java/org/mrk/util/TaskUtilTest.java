@@ -2,12 +2,14 @@ package org.mrk.util;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.mrk.enums.Category;
 import org.mrk.enums.Priority;
 import org.mrk.interfaces.Task;
 
 import java.util.Date;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +22,7 @@ class TaskUtilTest {
         long result = TaskUtil.deadLineMs(date);
         assertEquals(expected, result);
     }
+
     @Test
     void timeIsOverDeadLineMs() {
         //given
@@ -55,7 +58,7 @@ class TaskUtilTest {
         Date date = new Date();
 
         //when
-        Task result = TaskUtil.addTaskOnce(name, category,priority,date);
+        Task result = TaskUtil.addTaskOnce(name, category, priority, date);
 
         //then
         assertAll(

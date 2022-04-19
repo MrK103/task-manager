@@ -10,7 +10,6 @@ import org.mrk.enums.Priority;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TreeSet;
 
 @UtilityClass
 public class TaskUtil {
@@ -50,16 +49,6 @@ public class TaskUtil {
             return 0;
         }
         return date.getTime() - nowDate.getTime();
-    }
-
-
-    public static boolean checkRepeats(Task task, TreeSet<Task> tasks){
-        if (tasks.isEmpty()) {
-            return true;
-        }
-        else return tasks
-                .stream()
-                .noneMatch(AbstractTask -> AbstractTask.getName().equals(task.getName()));
     }
 
     public static Task addTaskOnce(String name, Category category, Priority priority, Date date){
