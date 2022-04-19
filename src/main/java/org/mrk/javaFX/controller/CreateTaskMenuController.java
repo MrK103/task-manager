@@ -16,7 +16,7 @@ import org.mrk.util.*;
 import java.util.Arrays;
 import java.util.Date;
 
-public class CreateTaskMenuController extends GeneralController{
+public class CreateTaskMenuController extends ControllerImpl {
     @FXML
     public DatePicker datePicker;
     @FXML
@@ -41,7 +41,7 @@ public class CreateTaskMenuController extends GeneralController{
     }
 
     public void init(Stage stage) {
-        initGeneralController(btnMinimize, btnClose, titlePane, stage);
+        controller(btnMinimize, btnClose, titlePane, stage);
 
         labelTitle.setText(UserUtil.getCurrentUser().getFirstName() + " " + UserUtil.getCurrentUser().getLastName());
 
@@ -92,7 +92,7 @@ public class CreateTaskMenuController extends GeneralController{
                         ));
             }
 
-            FileUtil.saveUserObj(UserUtil.getCurrentUser());
+            ServiceUtil.saveUser(UserUtil.getCurrentUser());
 
             Thread t1 = new Thread(new ThreadUtil(false));
             t1.setDaemon(true);

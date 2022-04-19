@@ -26,6 +26,7 @@ public class Util {
 //    }
 
     public static int validInt(String d) {
+        if (d == null) return -1;
         try {
             return Integer.parseInt(d);
         } catch (NumberFormatException ex) {

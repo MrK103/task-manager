@@ -8,16 +8,14 @@ import java.util.*;
 import java.util.List;
 
 @UtilityClass
-public class FileUtil {
+public class ServiceUtil {
 
-    private static final String USERNAMEPATH = "src/main/resources/users/users.txt";
-
-    public static void saveUserObj(User user){
+    public static void saveUser(User user){
         String path = "src/main/resources/users/"+ user.getFirstName() +".user";
         serialize(path, user);
     }
 
-    public static User loadUserObj(String name){
+    public static User loadUser(String name){
         String path = "src/main/resources/users/" + name + ".user";
         Optional<Object> desObj = deserialize(path);
         if (desObj.isEmpty()) {
@@ -31,25 +29,25 @@ public class FileUtil {
         return user;
     }
 
-    public static void serialize(String name, Object o){
-        try (FileOutputStream fos = new FileOutputStream(name);
+    public static void serialize(String path, Object user){
+        try (FileOutputStream fos = new FileOutputStream(path);
                 ObjectOutputStream oos = new ObjectOutputStream(fos)){
-                oos.writeObject(o);
+                oos.writeObject(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static Optional<Object> deserialize(String name){
+    public static Optional<Object> deserialize(String path){
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
-            fis = new FileInputStream(name);
+            fis = new FileInputStream(path);
             ois = new ObjectInputStream(fis);
             return Optional.of(ois.readObject());
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("User not found, this user will be deleted");
-            deleteUser(name);
+            deleteUser(path);
         } finally {
             try {
                 if (fis!= null) fis.close();
@@ -61,10 +59,10 @@ public class FileUtil {
         return Optional.empty();
     }
 
-    public static void saveNewUser(String name) {
+    public static void saveUserName(String name) {
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter(USERNAMEPATH, true));
+            bw = new BufferedWriter(new FileWriter(Link.USER_NAME_PATH, true));
             bw.newLine();
             bw.write(name);
         } catch (IOException e) {
@@ -82,7 +80,7 @@ public class FileUtil {
         BufferedReader br = null;
         try {
             List<String> userNames = new ArrayList<>();
-            br = new BufferedReader(new FileReader(USERNAMEPATH));
+            br = new BufferedReader(new FileReader(Link.USER_NAME_PATH));
             br.skip(4);
             String line;// = br.readLine();
             while ((line = br.readLine()) != null)  {
@@ -104,7 +102,7 @@ public class FileUtil {
     private static void saveUsersList(List<String> usersList){
         BufferedWriter bf = null;
         try {
-            bf = new BufferedWriter(new FileWriter(USERNAMEPATH));
+            bf = new BufferedWriter(new FileWriter(Link.USER_NAME_PATH));
             bf.write("Name");
             bf.newLine();
             for (String s : usersList) {

@@ -13,7 +13,7 @@ import org.mrk.util.UserUtil;
 
 import java.util.TreeSet;
 
-public class CreateUserMenuController extends GeneralController {
+public class CreateUserMenuController extends ControllerImpl {
     @FXML private Pane titlePane, btnOK;
     @FXML private ImageView btnMinimize, btnClose;
     @FXML private TextField nameField, surNameField;
@@ -24,7 +24,7 @@ public class CreateUserMenuController extends GeneralController {
     }
 
     public void init(Stage stage) {
-        initGeneralController(btnMinimize, btnClose, titlePane, stage);
+        controller(btnMinimize, btnClose, titlePane, stage);
         btnOK.setOnMouseClicked(mouserEvent -> {
             //проверка поля labelName
             if (nameField.getText().isEmpty()) {

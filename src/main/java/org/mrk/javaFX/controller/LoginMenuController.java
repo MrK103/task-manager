@@ -11,12 +11,12 @@ import javafx.stage.Stage;
 import org.mrk.interfaces.Controller;
 import org.mrk.util.Link;
 import org.mrk.javaFX.ui.MainWindow;
-import org.mrk.util.FileUtil;
+import org.mrk.util.ServiceUtil;
 import org.mrk.util.UserUtil;
 
 import java.util.Objects;
 
-public class LoginMenuController extends GeneralController implements Controller {
+public class LoginMenuController extends ControllerImpl implements Controller {
     @FXML private Pane titlePane, btnNew, btnDel, btnOK;
     @FXML private ListView<String> listMenu;
     @FXML private ImageView btnMinimize, btnClose;
@@ -28,11 +28,11 @@ public class LoginMenuController extends GeneralController implements Controller
 
     public void loadUsersList(){
         ObservableList<String> userNames = FXCollections.observableList(
-                Objects.requireNonNull(FileUtil.loadUsersList()));
+                Objects.requireNonNull(ServiceUtil.loadUsersList()));
         listMenu.setItems(userNames);
     }
     public void init(Stage stage) {
-        initGeneralController(btnMinimize, btnClose, titlePane, stage);
+        controller(btnMinimize, btnClose, titlePane, stage);
         loadUsersList();
         listSelections = listMenu.getSelectionModel();
         //перемещение окна
@@ -49,7 +49,7 @@ public class LoginMenuController extends GeneralController implements Controller
 
         btnOK.setOnMouseClicked(mouserEvent -> {
             if (listSelections.getSelectedItem()!=null){
-            UserUtil.setCurrentUser(FileUtil.loadUserObj(listSelections.selectedItemProperty().get()));
+            UserUtil.setCurrentUser(ServiceUtil.loadUser(listSelections.selectedItemProperty().get()));
             Link.currentLink = Link.MAIN_MENU;
             MainWindow mainWindow = new MainWindow();
             try {
@@ -62,12 +62,14 @@ public class LoginMenuController extends GeneralController implements Controller
 
         btnDel.setOnMouseClicked(event -> {
             if (listSelections.selectedItemProperty().get() != null) {
-             FileUtil.deleteUser(listSelections.selectedItemProperty().get());
+             ServiceUtil.deleteUser(listSelections.selectedItemProperty().get());
              int id = listSelections.getSelectedIndex();
              if (id != 0) --id;
              loadUsersList();
              listSelections.select(id);
             }
         });
+
+        }
     }
-}
+

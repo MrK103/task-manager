@@ -15,6 +15,7 @@ import java.util.TreeSet;
 @UtilityClass
 public class TaskUtil {
     public static String deadLineTime(Date date){
+        if (date == null) return "null";
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         long toDeadLineMS  = deadLineMs(date);
         if (toDeadLineMS == 0){
@@ -42,6 +43,8 @@ public class TaskUtil {
     }
 
     public static long deadLineMs(Date date){
+        if (date == null) return 0;
+
         Date nowDate = new Date();
         if (nowDate.getTime() > date.getTime()){
             return 0;
@@ -60,13 +63,14 @@ public class TaskUtil {
     }
 
     public static Task addTaskOnce(String name, Category category, Priority priority, Date date){
-        return new OnceTaskBuilder()
+         return new OnceTaskBuilder()
                 .setName(name)
                 .setCategory(category)
                 .setPriority(priority)
                 .setDate(date).
                 builder();
     }
+
     public static Task addTaskRepeats(String name, Category category, Priority priority, Date date, int reps, int repsAfter){
         return new RepeatTaskBuilder()
                 .setName(name)

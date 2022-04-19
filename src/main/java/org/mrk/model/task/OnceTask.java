@@ -1,5 +1,6 @@
 package org.mrk.model.task;
 
+import lombok.Builder;
 import org.mrk.enums.Category;
 import org.mrk.enums.Priority;
 

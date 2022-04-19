@@ -1,6 +1,6 @@
 package org.mrk.javaFX.controller;
 
-import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,9 +18,10 @@ import org.mrk.enums.Category;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
-public class MainMenuController extends GeneralController{
+import static java.lang.Thread.sleep;
+
+public class MainMenuController extends ControllerImpl {
     @FXML
     private Label lblDel, lblAdd, lblExit, lblUpdate;
     @FXML
@@ -48,7 +49,7 @@ public class MainMenuController extends GeneralController{
     }
 
     public void init(Stage stage) {
-        initGeneralController(btnMinimize, btnClose, titlePane, stage);
+        controller(btnMinimize, btnClose, titlePane, stage);
         userName.setText(UserUtil.getCurrentUser().getFirstName() + " " +  UserUtil.getCurrentUser().getLastName());
         listMenu.setItems(taskList);
         listSelections = listMenu.getSelectionModel();
@@ -74,12 +75,13 @@ public class MainMenuController extends GeneralController{
 
         btnUpdate.setOnMouseClicked(event -> setFilter(filterMenu.getValue()));
 
+
         btnDel.setOnMouseClicked(event -> {
             if (listSelections.getSelectedItem() != null) {
                 UserUtil.getCurrentUser().getTasks().remove(listSelections.getSelectedItem());
                 int id = listSelections.getSelectedIndex();
                 if (id != 0) --id;
-                FileUtil.saveUserObj(UserUtil.getCurrentUser());
+                ServiceUtil.saveUser(UserUtil.getCurrentUser());
                 //
                 Thread thread = new Thread(new ThreadUtil(listSelections.getSelectedItem().getIdTask()));
                 thread.setDaemon(true);
@@ -102,7 +104,7 @@ public class MainMenuController extends GeneralController{
             }
         });
 
-        listMenu.setOnMouseMoved(event -> setFilter(filterMenu.getValue()));
+        stage.setOnShowing(event -> System.err.println("Start"));
     }
 
 

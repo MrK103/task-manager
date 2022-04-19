@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 
 
 public class App {
+
     public static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void main(String[] args) {
@@ -21,10 +22,10 @@ public class App {
             } else {
                 Link.currentLink = Link.LOGIN_MENU;
             }
+
             executor.execute(new ThreadUtil(true));
             MainWindow mainWindow = new MainWindow();
             mainWindow.run();
-
 
         }catch (IOException e){
             e.printStackTrace();

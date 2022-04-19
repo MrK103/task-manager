@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import org.mrk.util.Link;
 import org.mrk.javaFX.ui.MainWindow;
 
-public class WelcomeMenuController extends GeneralController{
+public class WelcomeMenuController extends ControllerImpl {
     @FXML
     private Pane mainPane, btnNext, titlePane;
     @FXML
@@ -17,7 +17,7 @@ public class WelcomeMenuController extends GeneralController{
     }
 
     public void init(Stage stage) {
-        initGeneralController(btnMinimize, btnClose, titlePane, stage);
+        controller(btnMinimize, btnClose, titlePane, stage);
         mainPane.setOnMouseEntered(event -> btnNext.setDisable(false));
         mainPane.setOnMouseExited(event -> btnNext.setDisable(true));
 
