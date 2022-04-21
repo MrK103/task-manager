@@ -15,20 +15,10 @@ public class App {
     public static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void main(String[] args) {
-        try {
-            if (!new File(Link.TEMP_URL).exists()) {
-                new File(Link.TEMP_URL).createNewFile();
-                Link.currentLink = Link.WELCOME_MENU;
-            } else {
-                Link.currentLink = Link.LOGIN_MENU;
-            }
 
+            Link.currentLink = Link.TITLE_FRAME;
             executor.execute(new ThreadUtil(true));
             MainWindow mainWindow = new MainWindow();
             mainWindow.run();
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
     }
 }

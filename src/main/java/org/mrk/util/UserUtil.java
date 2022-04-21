@@ -18,32 +18,35 @@ public class UserUtil {
     public static User getCurrentUser() {
         return currentUser;
     }
+
     public static void setCurrentUser(User user) {
         UserUtil.currentUser = user;
     }
-    public static String getName(){
+
+    public static String getName() {
         return name;
     }
-    public static void setName(String name){
+
+    public static void setName(String name) {
         UserUtil.name = name;
     }
 
-    public static User checkNameRep(User user, List<String > usersList){
+    public static User checkNameRep(User user, List<String> usersList) {
         if (usersList.contains(user.getFirstName())) {
             user = UserModel.builder()
-                            .firstName("new_" + user.getFirstName())
-                            .lastName(user.getLastName())
-                            .id(user.getId())
-                            .tasks(user.getTasks())
-                            .build();
+                    .firstName("new_" + user.getFirstName())
+                    .lastName(user.getLastName())
+                    .id(user.getId())
+                    .tasks(user.getTasks())
+                    .build();
             return checkNameRep(user, usersList);
         }
         return user;
     }
 
-    public static void createUser(String name, String lastName, TreeSet<Task> tasks){
+    public static void createUser(String name, String lastName, TreeSet<Task> tasks) {
         List<String> usersList = ServiceUtil.loadUsersList();
-        if (usersList==null) usersList = new ArrayList<>();
+        if (usersList == null) usersList = new ArrayList<>();
         User user = checkNameRep(
                 UserModel.builder()
                         .firstName(name)

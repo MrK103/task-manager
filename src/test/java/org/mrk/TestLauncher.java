@@ -12,10 +12,8 @@ public class TestLauncher {
         var launcher = LauncherFactory.create();
         var summaryGeneratingListener = new SummaryGeneratingListener();
 
-        var request = LauncherDiscoveryRequestBuilder
-                .request()
-                .selectors(DiscoverySelectors.selectPackage("org.mrk.util"))
-                .build();
+        var request = LauncherDiscoveryRequestBuilder.request().selectors(
+                DiscoverySelectors.selectPackage("org.mrk.util")).build();
 
         launcher.execute(request, summaryGeneratingListener);
 

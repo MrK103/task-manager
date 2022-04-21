@@ -1,6 +1,7 @@
 package org.mrk.model.user;
 
 //import lombok.Builder;
+
 import lombok.Builder;
 import lombok.Getter;
 import org.mrk.interfaces.Task;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public final class UserModel implements org.mrk.interfaces.User{
+public final class UserModel implements org.mrk.interfaces.User {
 
     private final UUID id;
     private final String lastName;
@@ -41,7 +42,7 @@ public final class UserModel implements org.mrk.interfaces.User{
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return firstName + " " + lastName + " " + id;
     }
 }
