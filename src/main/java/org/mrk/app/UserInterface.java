@@ -3,7 +3,6 @@ package org.mrk.app;
 import org.mrk.interfaces.User;
 import org.mrk.exception.NullTaskException;
 import org.mrk.util.TaskCreator;
-import org.mrk.builder.user.UserBuilder;
 import org.mrk.interfaces.Task;
 import org.mrk.model.task.enums.Category;
 import org.mrk.model.task.enums.Priority;
@@ -60,7 +59,9 @@ public class UserInterface extends AbstractUtil {
         switch (answer){
             case "1" -> {
                 System.out.println("|----------------------------------|");
-                user.getTasks().forEach(task -> System.out.println(task.getIdTask() + ") " + task.getName()));
+                user.getTasks().forEach(task -> System.out.println(task.getIdTask() + ") "
+                        + task.getName() + ". "
+                        + AbstractUtil.deadLineTime(task.getDate())));
                 System.out.print("|----------------------------------|");
                 menu();
             }
