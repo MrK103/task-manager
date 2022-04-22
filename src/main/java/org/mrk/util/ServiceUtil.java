@@ -80,7 +80,12 @@ public class ServiceUtil {
         BufferedReader br = null;
         try {
             List<String> userNames = new ArrayList<>();
-            br = new BufferedReader(new FileReader(Link.USER_NAME_PATH));
+            File usersFile = new File(Link.USER_NAME_PATH);
+            if (!usersFile.exists()) {
+                usersFile.createNewFile();
+                saveUsersList(new ArrayList<>());
+            }
+            br = new BufferedReader(new FileReader(usersFile));
             br.skip(4);
             String line;// = br.readLine();
             while ((line = br.readLine()) != null)  {
