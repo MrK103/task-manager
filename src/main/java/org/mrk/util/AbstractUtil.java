@@ -6,6 +6,7 @@ import org.mrk.interfaces.User;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -66,6 +67,7 @@ public abstract class AbstractUtil{
         return date.getTime() - nowDate.getTime();
     }
 
+
     public static User createUser(){
         return new UserBuilder<Integer>()
                 .setFirstName(input("Enter your name"))
@@ -84,3 +86,4 @@ public abstract class AbstractUtil{
                 .build();
     }
 }
+

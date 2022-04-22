@@ -10,15 +10,5 @@ public class NullTaskException extends RuntimeException{
 
     public NullTaskException(String message, User<Integer> user){
         System.out.println(message);
-/*
-        User<Integer> newUser = new UserBuilder<Integer>()
-                .setFirstName(user.getFirstName())
-                .setLastName(user.getLastName())
-                .setId(user.getId())
-                .setTasks(new TreeSet<>())
-                .build();
-
-        new UserInterface(newUser).initUsers();
-*/
     }
 }
