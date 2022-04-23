@@ -4,11 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.mrk.javaFX.ui.MainWindow;
 import org.mrk.enums.Category;
 import org.mrk.enums.Priority;
 import org.mrk.util.*;
@@ -16,13 +14,11 @@ import org.mrk.util.*;
 import java.util.Arrays;
 import java.util.Date;
 
-public class CreateTaskMenuController extends GeneralController{
+public class CreateTaskMenuController extends ControllerImpl {
     @FXML
     public DatePicker datePicker;
     @FXML
-    private Pane titlePane, btnOK;
-    @FXML
-    private ImageView btnMinimize, btnClose;
+    private Pane btnOK;
     @FXML
     private TextField nameField, minutesField, hoursField, repeatsField, timesRepField;
     @FXML
@@ -30,7 +26,7 @@ public class CreateTaskMenuController extends GeneralController{
     @FXML
     private ChoiceBox<Category> boxCategory;
     @FXML
-    private Label labelTimeRep, labelRep, labelDate, labelTaskName, labelTitle;
+    private Label labelTimeRep, labelRep, labelDate, labelTaskName;
 
     private final ObservableList<Priority> listPriority =
             FXCollections.observableArrayList(Arrays.asList(Priority.HIGH, Priority.DEFAULT, Priority.LOW));
@@ -41,10 +37,6 @@ public class CreateTaskMenuController extends GeneralController{
     }
 
     public void init(Stage stage) {
-        initGeneralController(btnMinimize, btnClose, titlePane, stage);
-
-        labelTitle.setText(UserUtil.getCurrentUser().getFirstName() + " " + UserUtil.getCurrentUser().getLastName());
-
         boxPriority.setItems(listPriority);
         boxPriority.setValue(listPriority.get(0));
 
@@ -92,16 +84,15 @@ public class CreateTaskMenuController extends GeneralController{
                         ));
             }
 
-            FileUtil.saveUserObj(UserUtil.getCurrentUser());
+            ServiceUtil.saveUser(UserUtil.getCurrentUser());
 
             Thread t1 = new Thread(new ThreadUtil(false));
             t1.setDaemon(true);
             t1.start();
 
-            Link.currentLink = Link.MAIN_MENU;
-            MainWindow mainWindow = new MainWindow();
             try {
-                mainWindow.start(stage);
+                setWidth(460, 130);
+                loadNext(Link.MAIN_MENU, true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

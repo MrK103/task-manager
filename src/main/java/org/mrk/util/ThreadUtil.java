@@ -24,14 +24,14 @@ public class ThreadUtil implements Runnable{
 
     }
 
-    private static final List<Thread> listOfTask = new ArrayList<>();
+    public static final List<Thread> listOfTask = new ArrayList<>();
     private boolean showOverdueTask = false;
 
     private void init(){
-        List<String> userNameList = FileUtil.loadUsersList();
+        List<String> userNameList = ServiceUtil.loadUsersList();
         List<User> userObjList = new ArrayList<>();
-        assert userNameList != null;
-        userNameList.forEach(name -> userObjList.add(FileUtil.loadUserObj(name)));
+        if (userNameList == null) userNameList = new ArrayList<>();
+        userNameList.forEach(name -> userObjList.add(ServiceUtil.loadUser(name)));
 
         for (User user : userObjList) {
             //ju
@@ -63,7 +63,7 @@ public class ThreadUtil implements Runnable{
                 if (task instanceof RepeatTask repeatTask){
                     while (repeatTask.getRepeat().get()>0){
                         repeatTask.realization();
-                        FileUtil.saveUserObj(user);
+                        ServiceUtil.saveUser(user);
                         if (user.getFirstName().equals(UserUtil.getCurrentUser().getFirstName())){
                             UserUtil.setCurrentUser(user);
                         }
@@ -90,10 +90,10 @@ public class ThreadUtil implements Runnable{
     }
 
     public void deleteOverdueTask(User user, Task task){
-        User newUser = FileUtil.loadUserObj(user.getFirstName());
+        User newUser = ServiceUtil.loadUser(user.getFirstName());
         assert newUser != null;
         newUser.getTasks().remove(task);
-        FileUtil.saveUserObj(newUser);
+        ServiceUtil.saveUser(newUser);
         UserUtil.setCurrentUser(newUser);
     }
 

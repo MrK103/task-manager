@@ -1,5 +1,6 @@
 package org.mrk.model.task;
 
+import lombok.Builder;
 import org.mrk.enums.Category;
 import org.mrk.enums.Priority;
 
@@ -36,14 +37,14 @@ public final class RepeatTask extends AbstractTask {
 
     public RepeatTask(String name, Category category, Priority priority
             , Date date, int repeat, int timesToRepeat) {
-        super(name,category,priority, date);
+        super(name, category, priority, date);
         this.timesToRepeat = timesToRepeat;
         this.repeat.set(repeat);
     }
 
-    public String toString(){
+    public String toString() {
         return super.toString() +
                 "\nRepeats time: " + repeat +
-                " Repeats after: " + (timesToRepeat /1000) + " seconds\n";
+                " Repeats after: " + (timesToRepeat / 1000) + " seconds\n";
     }
 }
