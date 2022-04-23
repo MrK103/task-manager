@@ -11,12 +11,12 @@ import java.util.List;
 public class ServiceUtil {
 
     public static void saveUser(User user){
-        String path = "src/main/resources/users/"+ user.getFirstName() +".user";
+        String path = user.getFirstName() +".user";
         serialize(path, user);
     }
 
     public static User loadUser(String name){
-        String path = "src/main/resources/users/" + name + ".user";
+        String path = name + ".user";
         Optional<Object> desObj = deserialize(path);
         if (desObj.isEmpty()) {
             deleteUser(name);
@@ -81,6 +81,7 @@ public class ServiceUtil {
         try {
             List<String> userNames = new ArrayList<>();
             File usersFile = new File(Link.USER_NAME_PATH);
+
             if (!usersFile.exists()) {
                 usersFile.createNewFile();
                 saveUsersList(new ArrayList<>());

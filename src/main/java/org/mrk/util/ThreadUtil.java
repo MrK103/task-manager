@@ -30,7 +30,7 @@ public class ThreadUtil implements Runnable{
     private void init(){
         List<String> userNameList = ServiceUtil.loadUsersList();
         List<User> userObjList = new ArrayList<>();
-        assert userNameList != null;
+        if (userNameList == null) userNameList = new ArrayList<>();
         userNameList.forEach(name -> userObjList.add(ServiceUtil.loadUser(name)));
 
         for (User user : userObjList) {
