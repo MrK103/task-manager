@@ -1,36 +1,33 @@
 package org.mrk.app;
 
-import org.mrk.builder.user.UserBuilder;
-import org.mrk.interfaces.User;
+import org.mrk.util.Link;
+import org.mrk.javaFX.ui.MainWindow;
+import org.mrk.util.ThreadUtil;
 
-import java.util.TreeSet;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class App {
-
-    /**
-     * Добавлены методы deadLineTime (высчитывает время до выполнения задачи в человеческом виде и
-     * метод deadLineMs (время до выполнения в мс) в классе AbstractUtil
-     *
-     */
+    public static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void main(String[] args) {
+        try {
+            if (!new File(Link.TEMP_URL).exists()) {
+                new File(Link.TEMP_URL).createNewFile();
+                Link.currentLink = Link.WELCOME_MENU;
+            } else {
+                Link.currentLink = Link.LOGIN_MENU;
+            }
+            executor.execute(new ThreadUtil(true));
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.run();
 
-// чтобы не создавать каждый раз нового пользователя
 
-//        User<Integer> personInt = new UserBuilder<Integer>()
-//                .setFirstName("Mark")
-//                .setLastName("Sholomitskiy")
-//                .setId(2)
-//                //.setTasks(new TreeSet<>())
-//                .build();
-//        UserInterface ui = new UserInterface(personInt);
-//        ui.initUsers();
-
-
-        //create users vs task
-        UserInterface ui = new UserInterface();
-        ui = new UserInterface();
-        ui.initUsers();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

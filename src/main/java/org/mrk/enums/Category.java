@@ -1,8 +1,9 @@
-package org.mrk.model.task.enums;
+package org.mrk.enums;
 
 public enum Category {
     REPEATS("Повторяющаяся задача"),
-    ONCE("Одноразовая задача");
+    ONCE("Одноразовая задача"),
+    ALL("Все задачи");
 
     private final String name;
 

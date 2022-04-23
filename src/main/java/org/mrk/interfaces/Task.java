@@ -1,8 +1,8 @@
 package org.mrk.interfaces;
 
-import org.mrk.model.task.AbstractTask;
+import java.io.Serializable;
 
-public interface Task extends Comparable<Task> {
+public interface Task extends Comparable<Task>, Serializable {
 
     void realization();
 
@@ -22,9 +22,9 @@ public interface Task extends Comparable<Task> {
 
     int getIdTask();
 
-    org.mrk.model.task.enums.Category getCategory();
+    org.mrk.enums.Category getCategory();
 
-    org.mrk.model.task.enums.Priority getPriority();
+    org.mrk.enums.Priority getPriority();
 
     java.util.Date getDate();
 

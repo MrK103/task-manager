@@ -1,15 +1,23 @@
 package org.mrk.interfaces;
 
+import java.io.Serializable;
 import java.util.TreeSet;
+import java.util.UUID;
 
-public interface User<T> {
+public interface User extends Serializable {
     String getLastName();
 
     String getFirstName();
 
-    T getId();
+    UUID getId();
 
     String toString();
 
     TreeSet<Task> getTasks();
+
+    @Override
+    boolean equals(Object obj);
+
+    @Override
+    int hashCode();
 }

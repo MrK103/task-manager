@@ -1,35 +1,40 @@
 package org.mrk.model.task;
 
 import lombok.Getter;
-import org.mrk.model.task.enums.Category;
-import org.mrk.model.task.enums.Priority;
+import org.mrk.enums.Category;
+import org.mrk.enums.Priority;
 import org.mrk.interfaces.Task;
-import org.mrk.util.AbstractUtil;
+import org.mrk.util.TaskUtil;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
 
 @Getter
-public abstract class AbstractTask implements Task{
+public abstract class AbstractTask implements Task {
 
     private final String name;
     private final Priority priority;
-    private final Date date;
+    protected final Date date;
     private final int idTask;
-    private static int id = 0;
-    protected Category category;
+    private final Category category;
 
     public AbstractTask(String name, Category category, Priority priority, Date date) {
         this.name = name;
         this.category = category;
         this.priority = priority;
         this.date = date;
-        idTask = ++id;
+        idTask = new Random().nextInt();
     }
 
     @Override
     public void realization() {
-        System.out.println("Task " + name + " completed successfully!");
+        new Thread(() -> JOptionPane.showMessageDialog(
+                null,
+                "Задача " + name + " выполнена!",
+                name,
+                JOptionPane.ERROR_MESSAGE)).start();
     }
 
     @Override
@@ -40,7 +45,9 @@ public abstract class AbstractTask implements Task{
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof AbstractTask task)) return false;
+        if (!(obj instanceof AbstractTask task)) {
+            return false;
+        }
         return idTask == task.idTask;
     }
 
@@ -50,11 +57,12 @@ public abstract class AbstractTask implements Task{
     }
 
     @Override
+
     public String toString(){
-        return "\nTask name: " + name +
-                "\nID - " + idTask +
-                "\n" + AbstractUtil.deadLineTime(date) +
-                "\nCategory: " + category.toString() +
-                "\nPriority: " + priority;
+        return getName()
+                + " - "
+                + "priority - "
+                + getPriority()
+                + "\n" + TaskUtil.deadLineTime(getDate());
     }
 }

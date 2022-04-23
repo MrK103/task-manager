@@ -1,2 +1,3 @@
-# task-manager - homework_8 brunch
-Homework 8
+# task-manager - educational project
+
+Simple task manager
