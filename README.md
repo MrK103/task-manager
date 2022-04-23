@@ -1,3 +1,8 @@
-# task-manager - educational project
+# Task manager - educational project
 
-Simple task manager
+
+- Maven
+- JavaFX
+- Build with jdk18
+
+![alt text](src/main/resources/images/logo.png "Is it Nemo?")

@@ -1,4 +1,9 @@
 # Default ignored files
 /.idea
+/out
+/META-INF
 /target
 *.iml
+*.user
+temp
+*.txt
