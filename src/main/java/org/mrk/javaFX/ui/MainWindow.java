@@ -12,7 +12,7 @@ import org.mrk.util.Link;
 
 import java.util.Objects;
 
-public class MainWindow extends Application{
+public class MainWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -24,7 +24,7 @@ public class MainWindow extends Application{
         if (stage.getStyle() != StageStyle.TRANSPARENT) stage.initStyle(StageStyle.TRANSPARENT);
         stage.setResizable(false);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
-        ((Controller)loader.getController()).init(stage);
+        ((Controller) loader.getController()).init(stage);
         stage.show();
     }
 
