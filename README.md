@@ -1,4 +1,4 @@
-# task-manager - homework_10 brunch
-Homework 10 - Added saving user and their tasks via 
-serialization/deserialization
+# task-manager
+- Latest console version
 
+    ![alt text](src/main/resources/images/old_logo.png)
