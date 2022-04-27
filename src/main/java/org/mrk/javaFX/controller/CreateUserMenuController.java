@@ -40,10 +40,10 @@ public class CreateUserMenuController extends ControllerImpl {
             } else labelLastName.setTextFill(Color.web("#000000"));
 
             UserUtil.createUser(nameField.getText(), surNameField.getText(), new TreeSet<>());
-            if (radioBTN.isSelected()) Link.currentLink = Link.CREATE_TASK;
-            else Link.currentLink = Link.LOGIN_MENU;
+            if (radioBTN.isSelected()) Link.CURRENT_MENU = Link.CREATE_TASK;
+            else Link.CURRENT_MENU = Link.LOGIN_MENU;
             try {
-                loadNext (Link.currentLink, false);
+                loadNext (Link.CURRENT_MENU, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }

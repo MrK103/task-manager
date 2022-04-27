@@ -48,13 +48,7 @@ public class LoginMenuController extends ControllerImpl implements Controller {
 
         btnOK.setOnMouseClicked(mouserEvent -> {
             if (listSelections.getSelectedItem() != null) {
-                UserUtil.setCurrentUser(ServiceUtil.loadUser(listSelections.selectedItemProperty().get()));
-                try {
-                    setWidth(460, 130);
-                    loadNext(Link.MAIN_MENU, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                loadMainMenu(listSelections.selectedItemProperty().get());
             }
         });
 
@@ -68,6 +62,22 @@ public class LoginMenuController extends ControllerImpl implements Controller {
             }
         });
 
+        listMenu.setOnKeyReleased(keyEvent -> {
+            if (listSelections.selectedItemProperty().get()!=null){
+                if (keyEvent.getCode().toString().equals("ENTER")){
+                    loadMainMenu(listSelections.selectedItemProperty().get());
+                }
+            }
+        });
+    }
+    private void loadMainMenu(String userName){
+        UserUtil.setCurrentUser(ServiceUtil.loadUser(userName));
+        try {
+            setWidth(460, 130);
+            loadNext(Link.MAIN_MENU, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -75,13 +75,14 @@ public class ControllerImpl implements Controller {
         btnMinimizeMain = btnMinimize;
 
         try {
-            if (!new File(Link.TEMP_URL).exists()) {
-                new File(Link.TEMP_URL).createNewFile();
-                Link.currentLink = Link.WELCOME_MENU;
+            File tempDir = new File(Link.TEMP_URL);
+            if (!new File(tempDir, "temp").exists()) {
+                new File(tempDir, "temp").createNewFile();
+                Link.CURRENT_MENU = Link.WELCOME_MENU;
             } else {
-                Link.currentLink = Link.LOGIN_MENU;
+                Link.CURRENT_MENU = Link.LOGIN_MENU;
             }
-            loadNext(Link.currentLink, false);
+            loadNext(Link.CURRENT_MENU, false);
 
         } catch (IOException e) {
             e.printStackTrace();

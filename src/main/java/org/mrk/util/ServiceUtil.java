@@ -11,12 +11,12 @@ import java.util.List;
 public class ServiceUtil {
 
     public static void saveUser(User user){
-        String path = user.getFirstName() +".user";
+        String path = Link.TEMP_URL + "/" + user.getFirstName() +".user";
         serialize(path, user);
     }
 
     public static User loadUser(String name){
-        String path = name + ".user";
+        String path =  Link.TEMP_URL + "/" + name + ".user";
         Optional<Object> desObj = deserialize(path);
         if (desObj.isEmpty()) {
             deleteUser(name);
@@ -62,7 +62,7 @@ public class ServiceUtil {
     public static void saveUserName(String name) {
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter(Link.USER_NAME_PATH, true));
+            bw = new BufferedWriter(new FileWriter( Link.TEMP_URL + "/" + Link.USER_NAME_PATH, true));
             bw.newLine();
             bw.write(name);
         } catch (IOException e) {
@@ -80,7 +80,7 @@ public class ServiceUtil {
         BufferedReader br = null;
         try {
             List<String> userNames = new ArrayList<>();
-            File usersFile = new File(Link.USER_NAME_PATH);
+            File usersFile = new File(Link.TEMP_URL, Link.USER_NAME_PATH);
 
             if (!usersFile.exists()) {
                 usersFile.createNewFile();
@@ -108,7 +108,7 @@ public class ServiceUtil {
     private static void saveUsersList(List<String> usersList){
         BufferedWriter bf = null;
         try {
-            bf = new BufferedWriter(new FileWriter(Link.USER_NAME_PATH));
+            bf = new BufferedWriter(new FileWriter(Link.TEMP_URL + "/" + Link.USER_NAME_PATH));
             bf.write("Name");
             bf.newLine();
             for (String s : usersList) {
@@ -136,7 +136,7 @@ public class ServiceUtil {
         List<String> usersList = loadUsersList();
         if (usersList!=null) {
             usersList.remove(name);
-            new File("src/main/resources/users/" + name + ".user").delete();
+            new File(Link.TEMP_URL, name + ".user").delete();
             saveUsersList(usersList);
         }
     }

@@ -20,6 +20,7 @@ public final class RepeatTask extends AbstractTask {
     @Override
     public void realization() {
         if (repeat.get() > 1) {
+            super.realization();
             super.date.setTime(date.getTime() + timesToRepeat);
             new Thread(() -> JOptionPane.showMessageDialog(
                     null,
